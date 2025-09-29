@@ -344,7 +344,7 @@ script = ExtResource("1_kpjcp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rj586")
 animation = &"idle_down"
-frame_progress = 0.21683425
+frame_progress = 0.66439706
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 light_mask = 3
