@@ -1,8 +1,26 @@
-[gd_scene load_steps=8 format=4 uid="uid://dmp0856yvgnrd"]
+[gd_scene load_steps=14 format=4 uid="uid://dmp0856yvgnrd"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_8uh7m"]
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Objects/Player.tscn" id="2_6uqi0"]
 [ext_resource type="PackedScene" uid="uid://brliyf0hak32e" path="res://Objects/Enemy.tscn" id="3_6uqi0"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ykrsh"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_g14j6"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_vbegm"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ppyta"]
 texture = ExtResource("1_8uh7m")
@@ -19,7 +37,9 @@ texture = ExtResource("1_8uh7m")
 5:0/0 = 0
 5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:0/0 = 0
+6:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_g14j6")
 7:0/0 = 0
+7:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_vbegm")
 0:1/0 = 0
 0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:1/0 = 0
@@ -30,9 +50,13 @@ texture = ExtResource("1_8uh7m")
 3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:1/0 = 0
 4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ykrsh")
 5:1/0 = 0
+5:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ykrsh")
 6:1/0 = 0
+6:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ykrsh")
 7:1/0 = 0
+7:1/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ykrsh")
 0:2/0 = 0
 1:2/0 = 0
 2:2/0 = 0
@@ -56,7 +80,20 @@ texture = ExtResource("1_8uh7m")
 
 [sub_resource type="TileSet" id="TileSet_ykrsh"]
 physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_ppyta")
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_6uqi0"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ppyta"]
+vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)])
+agent_radius = 0.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g14j6"]
 texture = ExtResource("1_8uh7m")
@@ -67,7 +104,9 @@ texture = ExtResource("1_8uh7m")
 4:0/0 = 0
 5:0/0 = 0
 6:0/0 = 0
+6:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_6uqi0")
 7:0/0 = 0
+7:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_ppyta")
 0:1/0 = 0
 1:1/0 = 0
 2:1/0 = 0
@@ -95,7 +134,10 @@ texture = ExtResource("1_8uh7m")
 
 [sub_resource type="TileSet" id="TileSet_vbegm"]
 physics_layer_0/collision_layer = 1
+navigation_layer_0/layers = 7
 sources/0 = SubResource("TileSetAtlasSource_g14j6")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6uqi0"]
 
 [node name="test" type="Node2D"]
 
@@ -114,10 +156,19 @@ zoom = Vector2(4, 4)
 
 [node name="CharacterBody2D" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_6uqi0")]
 position = Vector2(-111, 26)
+target = NodePath("../test")
+
+[node name="CharacterBody2D2" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_6uqi0")]
+position = Vector2(128, 106)
 target = NodePath("../Player")
 
-[node name="CharacterBody2D2" parent="." instance=ExtResource("3_6uqi0")]
-position = Vector2(128, 106)
-
-[node name="CharacterBody2D3" parent="." instance=ExtResource("3_6uqi0")]
+[node name="CharacterBody2D3" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_6uqi0")]
+visible = false
 position = Vector2(-227, 55)
+target = NodePath("../Player")
+
+[node name="test" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="test"]
+position = Vector2(33, 61)
+shape = SubResource("CircleShape2D_6uqi0")

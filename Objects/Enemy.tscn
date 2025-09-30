@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://brliyf0hak32e"]
+[gd_scene load_steps=10 format=3 uid="uid://brliyf0hak32e"]
 
 [ext_resource type="Script" uid="uid://bje8o2t0yo5fi" path="res://Scripts/enemy/enemy.gd" id="1_pfjfy"]
 [ext_resource type="Texture2D" uid="uid://1ofxnn85cbyi" path="res://Assets/RPG_Hero/idle/idle_down_40x40.png" id="2_82iww"]
@@ -56,6 +56,8 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_elc20"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_82iww"]
+
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_pfjfy")
 
@@ -78,6 +80,9 @@ autostart = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
 shape = SubResource("CircleShape2D_elc20")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_82iww")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
