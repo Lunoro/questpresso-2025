@@ -5,6 +5,8 @@ extends CharacterBody2D
 @export var target : CharacterBody2D
 @export var speed : int = 50;
 
+#TODO: Add Pathfinding
+
 var in_sight = false
 func _physics_process(delta: float) -> void:
 	if in_sight:
