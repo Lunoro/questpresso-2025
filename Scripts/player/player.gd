@@ -3,11 +3,12 @@ extends CharacterBody2D
 enum Direction {LEFT, RIGHT, UP, DOWN}
 
 @export var speed = 125.0
+var health = 10.0
 
 var direction : Direction = Direction.DOWN
 var is_moving = false;
 var is_attacking = false;
-var is_dead = false;
+var is_dead = health <= 0;
 
 var input_direction
 
@@ -20,7 +21,7 @@ func get_input():
 	listen_for_attack()
 	velocity = input_direction * speed
 	is_moving = velocity.x != 0 || velocity.y != 0
-
+	
 func _physics_process(delta):
 	get_input()
 	move_and_slide()
@@ -35,6 +36,9 @@ func change_animation():
 	
 	if(is_attacking):
 		animation_name = "attack_" + Direction.keys()[direction].to_lower()
+	
+	if(is_dead):
+		animation_name = "death_" + Direction.keys()[direction].to_lower()
 	
 	$AnimatedSprite2D.play(animation_name)
 	await $AnimatedSprite2D.animation_finished
@@ -76,3 +80,9 @@ func change_direction(x : int, y : int):
 		direction = Direction.DOWN
 	if y < 0:
 		direction = Direction.UP
+
+
+func damage_taken(amount):
+	health -= amount
+	if health < 0:
+		health = 0
