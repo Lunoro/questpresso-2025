@@ -169,5 +169,6 @@ position_smoothing_speed = 7.0
 tile_set = SubResource("TileSet_30g14")
 collision_visibility_mode = 1
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("3_pv4y8")]
+[node name="CharacterBody2D" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_pv4y8")]
 position = Vector2(-102, -105)
+target = NodePath("../Player")
