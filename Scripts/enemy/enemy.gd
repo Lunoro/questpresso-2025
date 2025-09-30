@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 enum Direction {LEFT, RIGHT, UP, DOWN}
+var direction = Direction.DOWN
 
 @onready var vision_area = $Area2D
 @onready var navigation_agent = $NavigationAgent2D
@@ -20,8 +21,20 @@ func _physics_process(delta: float) -> void:
 	
 	velocity = direction * speed
 	move_and_slide()
-	
+
 # if player was in sight for a few seconds -> npc rushes to him and chases him, if hes out of vision he stops
+
+func get_fov_rotation() -> int:
+	var fov_rotation = 0; 
+	
+	if(direction == Direction.LEFT) :
+		fov_rotation = 90
+	if(direction == Direction.RIGHT) :
+		fov_rotation = -90
+	if(direction == Direction.UP) :
+		fov_rotation = 180
+		
+	return fov_rotation
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

@@ -16,7 +16,7 @@ func get_input():
 	if(is_attacking):
 		velocity = Vector2(0, 0);
 		return
-		
+
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	listen_for_attack()
 	velocity = input_direction * speed
@@ -33,17 +33,21 @@ func change_animation():
 	
 	if(is_moving):
 		animation_name = "move_" + Direction.keys()[direction].to_lower()
-	
+		
 	if(is_attacking):
 		animation_name = "attack_" + Direction.keys()[direction].to_lower()
+<<<<<<< HEAD
 	
 	if(is_dead):
 		animation_name = "death_" + Direction.keys()[direction].to_lower()
 	
+=======
+
+>>>>>>> 02e0ae1115dc6ba2130701361c9d4048ec4a2b87
 	$AnimatedSprite2D.play(animation_name)
 	await $AnimatedSprite2D.animation_finished
 	is_attacking = false
-	
+
 func listen_for_attack():
 	if Input.is_action_just_released("click"):
 		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
@@ -51,7 +55,7 @@ func listen_for_attack():
 		attack()
 		await $AnimatedSprite2D.animation_finished
 		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
-		
+
 func attack():
 	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (get_attack_rotation());
 
@@ -70,7 +74,7 @@ func get_attack_rotation() -> int:
 func _on_sword_hit_area_entered(area: Area2D) -> void:
 	if is_attacking && area.is_in_group("hitbox"):
 		print("hit")
-	
+
 func change_direction(x : int, y : int):
 	if x > 0:
 		direction = Direction.RIGHT
