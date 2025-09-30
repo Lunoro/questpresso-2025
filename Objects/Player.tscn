@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://d0b424myd7i3u"]
+[gd_scene load_steps=128 format=3 uid="uid://d0b424myd7i3u"]
 
 [ext_resource type="Script" uid="uid://dnlss3gbhjecj" path="res://Scripts/player/movement.gd" id="1_2qdoy"]
 [ext_resource type="Texture2D" uid="uid://1ofxnn85cbyi" path="res://Assets/RPG_Hero/idle/idle_down_40x40.png" id="2_cxr5p"]
@@ -829,8 +829,72 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qdoy"]
+size = Vector2(12, 9)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_4d7sh"]
 radius = 7.0
+
+[sub_resource type="Animation" id="Animation_dmq7b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_down"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_kwjl5"]
+resource_name = "attack_down"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack_down"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667, 0.20000002, 0.23333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g1u4f"]
+_data = {
+&"RESET": SubResource("Animation_dmq7b"),
+&"attack_down": SubResource("Animation_kwjl5")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 3
@@ -839,7 +903,15 @@ script = ExtResource("1_2qdoy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rj586")
-animation = &"attack_right"
+animation = &"attack_down"
+
+[node name="SwordHit" type="Area2D" parent="AnimatedSprite2D"]
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/SwordHit"]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_2qdoy")
+disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 light_mask = 3
@@ -847,4 +919,10 @@ visibility_layer = 3
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_4d7sh")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_g1u4f")
+}
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="area_entered" from="AnimatedSprite2D/SwordHit" to="." method="_on_sword_hit_area_entered"]

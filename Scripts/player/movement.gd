@@ -7,6 +7,7 @@ enum Direction {LEFT, RIGHT, UP, DOWN}
 var direction : Direction = Direction.DOWN
 var is_moving = false;
 var is_attacking = false;
+var is_dead = false;
 
 var input_direction
 
@@ -41,8 +42,31 @@ func change_animation():
 	
 func listen_for_attack():
 	if Input.is_action_just_released("click"):
+		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
 		is_attacking = true
+		attack()
+		await $AnimatedSprite2D.animation_finished
+		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
+		
+func attack():
+	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (get_attack_rotation());
 
+func get_attack_rotation() -> int:
+	var attack_rotation = 0; 
+	
+	if(direction == Direction.LEFT) :
+		attack_rotation = 90
+	if(direction == Direction.RIGHT) :
+		attack_rotation = -90
+	if(direction == Direction.UP) :
+		attack_rotation = 180
+		
+	return attack_rotation
+
+func _on_sword_hit_area_entered(area: Area2D) -> void:
+	if is_attacking && area.is_in_group("hitbox"):
+		print("hit")
+	
 func change_direction(x : int, y : int):
 	if x > 0:
 		direction = Direction.RIGHT
