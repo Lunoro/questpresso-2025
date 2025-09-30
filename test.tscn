@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://cfc0hryfqjexk"]
+[gd_scene load_steps=8 format=4 uid="uid://dmp0856yvgnrd"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_8uh7m"]
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Objects/Player.tscn" id="2_6uqi0"]
