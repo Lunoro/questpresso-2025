@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://ci2q6fuq8rkrk"]
+[gd_scene load_steps=7 format=3 uid="uid://ci2q6fuq8rkrk"]
 
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Objects/Player.tscn" id="1_y34fs"]
 [ext_resource type="Texture2D" uid="uid://cu7ag5x3dguu5" path="res://Assets/Pixel_Adventure_1/Terrain/Terrain (16x16).png" id="2_pv4y8"]
@@ -156,6 +156,11 @@ physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_cl5pu")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_pv4y8"]
+vertices = PackedVector2Array(220.96094, 120, -220.07813, 120, -221.92188, -116.0625, 220.03125, -118.92969)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-232, -126, -230, 130, 231, 130, 230, -129)])
+
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_y34fs")]
@@ -172,3 +177,6 @@ collision_visibility_mode = 1
 [node name="CharacterBody2D" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_pv4y8")]
 position = Vector2(-102, -105)
 target = NodePath("../Player")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_pv4y8")

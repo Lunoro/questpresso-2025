@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="Questpresso-2025"
 
+[global_group]
+
+hitbox=""
+
 [input]
 
 left={
