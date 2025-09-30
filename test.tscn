@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://cfc0hryfqjexk"]
+[gd_scene load_steps=8 format=4 uid="uid://dmp0856yvgnrd"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_8uh7m"]
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Objects/Player.tscn" id="2_6uqi0"]
@@ -112,8 +112,9 @@ position = Vector2(-49, 121)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(4, 4)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("3_6uqi0")]
+[node name="CharacterBody2D" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_6uqi0")]
 position = Vector2(-111, 26)
+target = NodePath("../Player")
 
 [node name="CharacterBody2D2" parent="." instance=ExtResource("3_6uqi0")]
 position = Vector2(128, 106)

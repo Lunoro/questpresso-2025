@@ -4,15 +4,9 @@ enum Direction {LEFT, RIGHT, UP, DOWN}
 
 @export var speed = 125.0
 
-var animations = {
-	Direction.LEFT: {true: "idle_left", false: "move_left"},
-	Direction.RIGHT: {true: "idle_right", false: "move_right"},
-	Direction.UP: {true: "idle_up", false: "move_up"},
-	Direction.DOWN: {true: "idle_down", false: "move_down"},
-}
-
-var direction = Direction.LEFT
+var direction : Direction = Direction.DOWN
 var is_standing = true;
+var is_attacking = false;
 
 var input_direction
 
@@ -26,7 +20,17 @@ func _physics_process(delta):
 	move_and_slide()
 	change_direction(input_direction.x, input_direction.y)
 	change_animation()
+
+func change_animation():
+	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
 	
+	if(is_attacking):
+		animation_name = "attack_" + Direction.keys()[direction].to_lower()
+	if(!is_standing):
+		animation_name = "move_" + Direction.keys()[direction].to_lower()
+	
+	$AnimatedSprite2D.play(animation_name)
+
 func change_direction(x : int, y : int):
 	if x > 0:
 		direction = Direction.RIGHT
@@ -36,7 +40,3 @@ func change_direction(x : int, y : int):
 		direction = Direction.DOWN
 	if y < 0:
 		direction = Direction.UP
-		
-func change_animation():
-	var animation_name = animations[direction][is_standing]
-	$AnimatedSprite2D.play(animation_name)
