@@ -6,23 +6,57 @@ var direction = Direction.DOWN
 @onready var vision_area = $Area2D
 @onready var navigation_agent = $NavigationAgent2D
 @export var target : CharacterBody2D
-@export var speed : int = 200;
+@export var speed : int = 125;
 
+var is_triggered = false
 var in_sight = false
+
+var is_attacking = false
+var is_moving = false
+
 func _physics_process(delta: float) -> void:
-	if !in_sight:
+	update_animation()
+	update_rotation()
+	update_fov()
+	find_path()
+	move_and_slide()
+	
+func find_path():
+	var distance_to_player = global_position.distance_to(target.global_position);
+	
+	if !is_triggered:
+		is_moving = false;
 		return
 		
-	if navigation_agent.is_target_reached():
+	if(distance_to_player < 20):
+		is_attacking = true;
 		return
 	
 	var next_position = navigation_agent.get_next_path_position()
 	var direction = (next_position - global_position).normalized()
+	is_moving = true
 	
 	velocity = direction * speed
-	move_and_slide()
+	
+	if is_attacking:
+		velocity = Vector2(0,0)
+	
+func update_animation():
+	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
+	
+	if(is_moving):
+		animation_name = "move_" + Direction.keys()[direction].to_lower()
+		
+	if(is_attacking):
+		animation_name = "attack_" + Direction.keys()[direction].to_lower()
 
-# if player was in sight for a few seconds -> npc rushes to him and chases him, if hes out of vision he stops
+	$AnimatedSprite2D.play(animation_name)
+	await $AnimatedSprite2D.animation_finished
+	is_attacking = false
+
+func update_fov() -> void:
+	$FOV.rotation_degrees = get_fov_rotation()
+	
 
 func get_fov_rotation() -> int:
 	var fov_rotation = 0; 
@@ -39,6 +73,7 @@ func get_fov_rotation() -> int:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		in_sight = true
+		is_triggered = true
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body.name == "Player":
@@ -47,3 +82,18 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	if navigation_agent.target_position != target.global_position:
 		navigation_agent.target_position = target.global_position
+		
+func update_rotation():
+	var angle = rad_to_deg((target.position - position).angle())
+	
+	if(angle > -45 && angle < 45):
+		direction = Direction.RIGHT
+		
+	if(angle > 45 && angle < 135):
+		direction = Direction.DOWN
+		
+	if(angle > -135 && angle < -45):
+		direction = Direction.UP
+		
+	if(angle > 135 || angle < -135):
+		direction = Direction.LEFT
