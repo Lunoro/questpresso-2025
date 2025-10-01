@@ -13,8 +13,27 @@ var in_sight = false
 
 var is_attacking = false
 var is_moving = false
+var is_dead = false
+
+var health = 10.0
+var armor_class = {
+	0: 1.0,
+	1: 0.8,
+	2: 0.5,
+	3: 0.25,
+	4: 0.1,
+	5: 0.05
+}
+
+func damage_taken(amount):
+	health -= amount * armor_class[0]
+	if health <= 0 && is_dead == false:
+		is_dead = true
+		health = 0
+		update_animation()
 
 func _physics_process(delta: float) -> void:
+	if(is_dead): return
 	update_animation()
 	update_rotation()
 	update_fov()
@@ -50,6 +69,9 @@ func update_animation():
 		
 	if(is_attacking):
 		animation_name = "attack_" + Direction.keys()[direction].to_lower()
+		
+	if(is_dead):
+		animation_name = "die_" + Direction.keys()[direction].to_lower()
 
 	$AnimatedSprite2D.play(animation_name)
 	await $AnimatedSprite2D.animation_finished
@@ -108,6 +130,7 @@ func update_rotation():
 func _on_melee_hit_area_entered(area: Area2D) -> void:
 	if is_attacking && area.is_in_group("hitbox"):
 		area.get_parent().damage_taken(5);
+		pass
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":

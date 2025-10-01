@@ -3,6 +3,7 @@ extends CharacterBody2D
 enum Direction {LEFT, RIGHT, UP, DOWN}
 
 @export var speed = 125.0
+@export var damage = 1
 
 var health = 10.0
 var armor_class = { # wird mit Damage multipliziert
@@ -85,8 +86,9 @@ func get_attack_rotation() -> int:
 	return attack_rotation
 
 func _on_sword_hit_area_entered(area: Area2D) -> void:
-	if is_attacking && area.is_in_group("hitbox"):
-		print("hit")
+	if is_attacking && area.is_in_group("hitbox") && area.get_parent().name != name:
+		area.get_parent().damage_taken(5);
+		print(area.get_parent().name)
 
 func change_direction(x : int, y : int):
 	if x > 0:
