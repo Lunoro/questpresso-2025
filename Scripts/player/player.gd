@@ -4,6 +4,7 @@ enum Direction {LEFT, RIGHT, UP, DOWN}
 
 @export var speed = 125.0
 @export var damage = 1
+# test
 
 var health = 10.0
 var armor_class = { # wird mit Damage multipliziert
