@@ -3,14 +3,30 @@ extends CharacterBody2D
 enum Direction {LEFT, RIGHT, UP, DOWN}
 
 @export var speed = 125.0
+
 var health = 10.0
+var armor_class = { # wird mit Damage multipliziert
+	0: 1.0,
+	1: 0.8,
+	2: 0.5,
+	3: 0.25,
+	4: 0.1,
+	5: 0.05
+}
 
 var direction : Direction = Direction.DOWN
 var is_moving = false;
 var is_attacking = false;
-var is_dead = health <= 0;
+var is_dead = false;
 
 var input_direction
+
+func damage_taken(amount):
+	health -= amount * armor_class[0]
+	if health <= 0 && is_dead == false:
+		is_dead = true
+		health = 0
+		change_animation()
 
 func get_input():
 	if(is_attacking):
@@ -24,10 +40,11 @@ func get_input():
 	
 func _physics_process(delta):
 	get_input()
-	move_and_slide()
-	change_direction(input_direction.x, input_direction.y)
-	change_animation()
-
+	if is_dead == false: 
+		move_and_slide()
+		change_direction(input_direction.x, input_direction.y)
+		change_animation()
+	
 func change_animation():
 	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
 	
@@ -36,14 +53,10 @@ func change_animation():
 		
 	if(is_attacking):
 		animation_name = "attack_" + Direction.keys()[direction].to_lower()
-<<<<<<< HEAD
 	
 	if(is_dead):
-		animation_name = "death_" + Direction.keys()[direction].to_lower()
-	
-=======
+		animation_name = "die_" + Direction.keys()[direction].to_lower()
 
->>>>>>> 02e0ae1115dc6ba2130701361c9d4048ec4a2b87
 	$AnimatedSprite2D.play(animation_name)
 	await $AnimatedSprite2D.animation_finished
 	is_attacking = false
@@ -84,9 +97,3 @@ func change_direction(x : int, y : int):
 		direction = Direction.DOWN
 	if y < 0:
 		direction = Direction.UP
-
-
-func damage_taken(amount):
-	health -= amount
-	if health < 0:
-		health = 0
