@@ -83,6 +83,7 @@ func update_fov() -> void:
 	if(is_triggered):
 		update_rotation()
 		$FOV.rotation_degrees = get_fov_rotation()
+		$RayCast2D.rotation_degrees = get_fov_rotation()
 
 func get_fov_rotation() -> int:
 	var fov_rotation = 0; 

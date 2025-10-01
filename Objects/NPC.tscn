@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cnwlpg303kk11"]
 
-[ext_resource type="Script" path="res://Objects/npc.gd" id="1_eymd0"]
+[ext_resource type="Script" uid="uid://4ox5r0gqinhd" path="res://Objects/npc.gd" id="1_eymd0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k5hr7"]
 
