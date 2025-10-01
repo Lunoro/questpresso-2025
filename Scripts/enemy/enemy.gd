@@ -6,7 +6,7 @@ var direction = Direction.DOWN
 @onready var vision_area = $Area2D
 @onready var navigation_agent = $NavigationAgent2D
 @export var target : CharacterBody2D
-@export var speed : int = 125;
+@export var speed : int = 50;
 
 var is_triggered = false
 var in_sight = false
@@ -35,7 +35,6 @@ func damage_taken(amount):
 func _physics_process(delta: float) -> void:
 	if(is_dead): return
 	update_animation()
-	update_rotation()
 	update_fov()
 	find_path()
 	move_and_slide()
@@ -45,11 +44,16 @@ func find_path():
 	
 	if !is_triggered:
 		is_moving = false;
+		velocity = Vector2(0,0)
 		return
 		
 	if(distance_to_player < 20):
 		is_attacking = true
 		attack()
+		return
+		
+	if is_attacking:
+		velocity = Vector2(0,0)
 		return
 	
 	var next_position = navigation_agent.get_next_path_position()
@@ -57,9 +61,6 @@ func find_path():
 	is_moving = true
 	
 	velocity = direction * speed
-	
-	if is_attacking:
-		velocity = Vector2(0,0)
 	
 func update_animation():
 	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
@@ -78,8 +79,9 @@ func update_animation():
 	is_attacking = false
 
 func update_fov() -> void:
-	$FOV.rotation_degrees = get_fov_rotation()
-	
+	if(is_triggered):
+		update_rotation()
+		$FOV.rotation_degrees = get_fov_rotation()
 
 func get_fov_rotation() -> int:
 	var fov_rotation = 0; 
@@ -92,7 +94,7 @@ func get_fov_rotation() -> int:
 		fov_rotation = 180
 		
 	return fov_rotation
-		
+
 func attack():
 	$MeleeHit/CollisionShape2D.disabled = false
 	is_attacking = true
@@ -111,7 +113,7 @@ func get_attack_rotation() -> int:
 		attack_rotation = 180
 		
 	return attack_rotation
-		
+
 func update_rotation():
 	var angle = rad_to_deg((target.position - position).angle())
 	
@@ -126,21 +128,29 @@ func update_rotation():
 		
 	if(angle > 135 || angle < -135):
 		direction = Direction.LEFT
-		
+
 func _on_melee_hit_area_entered(area: Area2D) -> void:
 	if is_attacking && area.is_in_group("hitbox"):
 		area.get_parent().damage_taken(5);
-		pass
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
+	print("entered")
 	if body.name == "Player":
 		in_sight = true
 		is_triggered = true
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
+	print("left")
 	if body.name == "Player":
 		in_sight = false
+		$Update_Aggro.start(-1)
 
-func _on_timer_timeout() -> void:
+func _on_update_path_timeout() -> void:
 	if navigation_agent.target_position != target.global_position:
 		navigation_agent.target_position = target.global_position
+
+func _on_update_aggro_timeout() -> void:
+	if(in_sight): return
+	print("triggered")
+	is_triggered = false
+	$Update_Aggro.stop()
