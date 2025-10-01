@@ -585,11 +585,9 @@ autostart = true
 [node name="Hitbox" type="Area2D" parent="." groups=["hitbox"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-visible = false
 shape = SubResource("CircleShape2D_elc20")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_82iww")
 
 [node name="MeleeHit" type="Area2D" parent="."]

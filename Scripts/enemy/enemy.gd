@@ -107,7 +107,7 @@ func update_rotation():
 		
 func _on_melee_hit_area_entered(area: Area2D) -> void:
 	if is_attacking && area.is_in_group("hitbox"):
-		print("hit")
+		area.get_parent().damage_taken(5);
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
