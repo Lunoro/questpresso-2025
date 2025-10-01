@@ -116,10 +116,18 @@ func _on_sword_hit_area_entered(area: Area2D) -> void:
 
 func listen_for_interact():
 	if Input.is_action_just_released("interact"):
+
 		$Interacting/CollisionShape2D.disabled = false
+
+		for area : Area2D in $Interacting.get_overlapping_areas():
+			if(!area.is_in_group("interact")):
+				$Interacting/CollisionShape2D.disabled = true
+				return
+		
+		is_interacting = true
 	
 func _on_interacting_area_entered(area: Area2D) -> void:
-	if (area.is_in_group("interact")):
+	if (area.is_in_group("interact") && is_interacting):
 		print("interacting")
 		area.get_parent().interact()
 	$Interacting/CollisionShape2D.disabled = true
