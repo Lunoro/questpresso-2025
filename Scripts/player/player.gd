@@ -7,6 +7,7 @@ enum Direction {LEFT, RIGHT, UP, DOWN}
 # test
 
 var health = 10.0
+var armor = 1
 var armor_class = { # wird mit Damage multipliziert
 	0: 1.0,
 	1: 0.8,
@@ -25,7 +26,7 @@ var is_interacting = false
 var input_direction
 
 func damage_taken(amount):
-	health -= amount * armor_class[0]
+	health -= amount * armor_class[armor]
 	if health <= 0 && is_dead == false:
 		is_dead = true
 		health = 0

@@ -10,11 +10,13 @@ var direction = Direction.DOWN
 
 var is_triggered = false
 var in_sight = false
+var in_melee = false
 
 var is_attacking = false
 var is_moving = false
 var is_dead = false
 
+var armor = 3
 var health = 10.0
 var armor_class = {
 	0: 1.0,
@@ -26,11 +28,13 @@ var armor_class = {
 }
 
 func damage_taken(amount):
-	health -= amount * armor_class[0]
+	health -= amount * armor_class[armor]
 	if health <= 0 && is_dead == false:
 		is_dead = true
 		health = 0
 		update_animation()
+	if health < 0: 
+		health = 0
 
 func _physics_process(delta: float) -> void:
 	if(is_dead): return
@@ -47,12 +51,8 @@ func find_path():
 		velocity = Vector2(0,0)
 		return
 		
-	if(distance_to_player < 20):
-		is_attacking = true
+	if distance_to_player < 20:
 		attack()
-		return
-		
-	if is_attacking:
 		velocity = Vector2(0,0)
 		return
 	
@@ -79,6 +79,7 @@ func update_animation():
 	is_attacking = false
 
 func update_fov() -> void:
+	$MeleeHit.global_rotation_degrees = (get_attack_rotation()); #Attack hitbox wird ausgerichtet
 	if(is_triggered):
 		update_rotation()
 		$FOV.rotation_degrees = get_fov_rotation()
@@ -94,13 +95,6 @@ func get_fov_rotation() -> int:
 		fov_rotation = 180
 		
 	return fov_rotation
-
-func attack():
-	$MeleeHit/CollisionShape2D.disabled = false
-	is_attacking = true
-	$MeleeHit.global_rotation_degrees = (get_attack_rotation());
-	await $AnimatedSprite2D.animation_finished
-	$MeleeHit/CollisionShape2D.disabled = true
 
 func get_attack_rotation() -> int:
 	var attack_rotation = 0; 
@@ -129,9 +123,19 @@ func update_rotation():
 	if(angle > 135 || angle < -135):
 		direction = Direction.LEFT
 
+func attack() -> void: 
+	is_attacking = true
+	update_animation()
+	await $AnimatedSprite2D.animation_finished
+	if in_melee == "Player": 
+		%Player.damage_taken(5)
+	is_attacking = false
+
 func _on_melee_hit_area_entered(area: Area2D) -> void:
-	if is_attacking && area.is_in_group("hitbox"):
-		area.get_parent().damage_taken(5);
+	in_melee = "Player"
+
+func _on_melee_hit_area_exited(area: Area2D) -> void:
+	in_melee = "false"
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	print("entered")

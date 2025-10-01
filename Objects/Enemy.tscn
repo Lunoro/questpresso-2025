@@ -885,4 +885,5 @@ wait_time = 8.0
 [connection signal="timeout" from="Update_Path" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Update_Path" to="." method="_on_update_path_timeout"]
 [connection signal="area_entered" from="MeleeHit" to="." method="_on_melee_hit_area_entered"]
+[connection signal="area_exited" from="MeleeHit" to="." method="_on_melee_hit_area_exited"]
 [connection signal="timeout" from="Update_Aggro" to="." method="_on_update_aggro_timeout"]
