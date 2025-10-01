@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddh6ibu6ti7k3"]
+
+[ext_resource type="Script" uid="uid://c48ducxciigx" path="res://Scripts/POV/pov_camera.gd" id="1_x8k5t"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_frevf"]
+
+[node name="POV_Camera" type="Camera2D"]
+zoom = Vector2(3, 3)
+script = ExtResource("1_x8k5t")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -185.0
+offset_top = -104.0
+offset_right = -106.0
+offset_bottom = -81.0
+text = "Health: 10"
+label_settings = SubResource("LabelSettings_frevf")

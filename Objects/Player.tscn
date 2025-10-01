@@ -866,5 +866,14 @@ shape = SubResource("CircleShape2D_4d7sh")
 visible = false
 shape = SubResource("CircleShape2D_2qdoy")
 
+[node name="Interacting" type="Area2D" parent="."]
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interacting"]
+position = Vector2(0, 13)
+shape = SubResource("RectangleShape2D_2qdoy")
+disabled = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AnimatedSprite2D/SwordHit" to="." method="_on_sword_hit_area_entered"]
+[connection signal="area_entered" from="Interacting" to="." method="_on_interacting_area_entered"]

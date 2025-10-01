@@ -16,9 +16,10 @@ var armor_class = { # wird mit Damage multipliziert
 }
 
 var direction : Direction = Direction.DOWN
-var is_moving = false;
-var is_attacking = false;
-var is_dead = false;
+var is_moving = false
+var is_attacking = false
+var is_dead = false
+var is_interacting = false
 
 var input_direction
 
@@ -40,11 +41,18 @@ func get_input():
 	is_moving = velocity.x != 0 || velocity.y != 0
 	
 func _physics_process(delta):
-	get_input()
-	if is_dead == false: 
+	if is_dead: 
+		return
+		
+	if (!is_interacting):
+		get_input()
 		move_and_slide()
 		change_direction(input_direction.x, input_direction.y)
+		update_area_rotation()
 		change_animation()
+		listen_for_interact();
+		
+# animation block
 	
 func change_animation():
 	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
@@ -62,34 +70,6 @@ func change_animation():
 	await $AnimatedSprite2D.animation_finished
 	is_attacking = false
 
-func listen_for_attack():
-	if Input.is_action_just_released("click"):
-		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
-		is_attacking = true
-		attack()
-		await $AnimatedSprite2D.animation_finished
-		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
-
-func attack():
-	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (get_attack_rotation());
-
-func get_attack_rotation() -> int:
-	var attack_rotation = 0; 
-	
-	if(direction == Direction.LEFT) :
-		attack_rotation = 90
-	if(direction == Direction.RIGHT) :
-		attack_rotation = -90
-	if(direction == Direction.UP) :
-		attack_rotation = 180
-		
-	return attack_rotation
-
-func _on_sword_hit_area_entered(area: Area2D) -> void:
-	if is_attacking && area.is_in_group("hitbox") && area.get_parent().name != name:
-		area.get_parent().damage_taken(5);
-		print(area.get_parent().name)
-
 func change_direction(x : int, y : int):
 	if x > 0:
 		direction = Direction.RIGHT
@@ -99,3 +79,48 @@ func change_direction(x : int, y : int):
 		direction = Direction.DOWN
 	if y < 0:
 		direction = Direction.UP
+
+# fight block
+
+func listen_for_attack():
+	if Input.is_action_just_released("click"):
+		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
+		is_attacking = true
+		await $AnimatedSprite2D.animation_finished
+		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
+
+func update_area_rotation():
+	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (get_area_rotation());
+	$Interacting.global_rotation_degrees = (get_area_rotation());
+
+func get_area_rotation() -> int:
+	var transform_rotation = 0; 
+	
+	if(direction == Direction.LEFT) :
+		transform_rotation = 90
+	if(direction == Direction.RIGHT) :
+		transform_rotation = -90
+	if(direction == Direction.UP) :
+		transform_rotation = 180
+	
+	return transform_rotation
+
+func _on_sword_hit_area_entered(area: Area2D) -> void:
+	if is_attacking && area.is_in_group("hitbox") && area.get_parent().name != name:
+		area.get_parent().damage_taken(5);
+		print(area.get_parent().name)
+
+# Interaction Block
+
+#TODO do interaction handshake with interacting object and freeze player. If the player presses e the next text rolls in, if the interaction is finished unfreeze the player
+
+func listen_for_interact():
+	if Input.is_action_just_released("interact"):
+		$Interacting/CollisionShape2D.disabled = false
+	
+
+func _on_interacting_area_entered(area: Area2D) -> void:
+	if (area.is_in_group("interact")):
+		print("interacting")
+		area.get_parent().interact()
+	$Interacting/CollisionShape2D.disabled = true
