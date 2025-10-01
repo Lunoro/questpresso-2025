@@ -29,7 +29,8 @@ func find_path():
 		return
 		
 	if(distance_to_player < 20):
-		is_attacking = true;
+		is_attacking = true
+		attack()
 		return
 	
 	var next_position = navigation_agent.get_next_path_position()
@@ -69,19 +70,25 @@ func get_fov_rotation() -> int:
 		fov_rotation = 180
 		
 	return fov_rotation
+		
+func attack():
+	$MeleeHit/CollisionShape2D.disabled = false
+	is_attacking = true
+	$MeleeHit.global_rotation_degrees = (get_attack_rotation());
+	await $AnimatedSprite2D.animation_finished
+	$MeleeHit/CollisionShape2D.disabled = true
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body.name == "Player":
-		in_sight = true
-		is_triggered = true
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if body.name == "Player":
-		in_sight = false
-
-func _on_timer_timeout() -> void:
-	if navigation_agent.target_position != target.global_position:
-		navigation_agent.target_position = target.global_position
+func get_attack_rotation() -> int:
+	var attack_rotation = 0; 
+	
+	if(direction == Direction.LEFT) :
+		attack_rotation = 90
+	if(direction == Direction.RIGHT) :
+		attack_rotation = -90
+	if(direction == Direction.UP) :
+		attack_rotation = 180
+		
+	return attack_rotation
 		
 func update_rotation():
 	var angle = rad_to_deg((target.position - position).angle())
@@ -97,3 +104,20 @@ func update_rotation():
 		
 	if(angle > 135 || angle < -135):
 		direction = Direction.LEFT
+		
+func _on_melee_hit_area_entered(area: Area2D) -> void:
+	if is_attacking && area.is_in_group("hitbox"):
+		print("hit")
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body.name == "Player":
+		in_sight = true
+		is_triggered = true
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body.name == "Player":
+		in_sight = false
+
+func _on_timer_timeout() -> void:
+	if navigation_agent.target_position != target.global_position:
+		navigation_agent.target_position = target.global_position
