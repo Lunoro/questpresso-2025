@@ -186,4 +186,5 @@ navigation_polygon = SubResource("NavigationPolygon_pv4y8")
 [node name="CharacterBody2D2" parent="." instance=ExtResource("3_c6o2m")]
 position = Vector2(169, -24)
 
-[node name="ui" parent="." instance=ExtResource("6_ypsnf")]
+[node name="ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_ypsnf")]
+player = NodePath("../Player")

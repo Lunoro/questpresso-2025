@@ -3,7 +3,7 @@ extends CharacterBody2D
 enum Direction {LEFT, RIGHT, UP, DOWN}
 var direction = Direction.DOWN
 
-@onready var vision_area = $Area2D
+@onready var vision_area = $FOV
 @onready var navigation_agent = $NavigationAgent2D
 @export var target : CharacterBody2D
 @export var speed : int = 50;

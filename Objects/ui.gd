@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 
-@onready var player: CharacterBody2D = %Player
+@export var player: Node
 
 func _process(delta: float) -> void:
-	$Label.text = "Health: " + str(player.health)
+	$Label.text = "Health: " + str(player.get_parent().health)
