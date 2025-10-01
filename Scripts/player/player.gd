@@ -118,7 +118,6 @@ func listen_for_interact():
 	if Input.is_action_just_released("interact"):
 		$Interacting/CollisionShape2D.disabled = false
 	
-
 func _on_interacting_area_entered(area: Area2D) -> void:
 	if (area.is_in_group("interact")):
 		print("interacting")
