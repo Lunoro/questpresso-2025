@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://ci2q6fuq8rkrk"]
 
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Objects/Player.tscn" id="1_y34fs"]
-[ext_resource type="PackedScene" uid="uid://ddh6ibu6ti7k3" path="res://Objects/pov_camera.tscn" id="2_bv5d6"]
 [ext_resource type="Texture2D" uid="uid://cu7ag5x3dguu5" path="res://Assets/Pixel_Adventure_1/Terrain/Terrain (16x16).png" id="2_pv4y8"]
-[ext_resource type="PackedScene" uid="uid://nx1syn8cbeyd" path="res://Objects/NPC.tscn" id="3_c6o2m"]
+[ext_resource type="PackedScene" uid="uid://cnwlpg303kk11" path="res://Objects/NPC.tscn" id="3_c6o2m"]
 [ext_resource type="PackedScene" uid="uid://brliyf0hak32e" path="res://Objects/Enemy.tscn" id="3_pv4y8"]
+[ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/ui.tscn" id="6_ypsnf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cl5pu"]
 texture = ExtResource("2_pv4y8")
@@ -168,11 +168,11 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-232, -126, -230, 130, 
 [node name="Player" parent="." instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
 position = Vector2(78, 22)
-speed = 125.0
-damage = 1
 
-[node name="POV_Camera" parent="Player" instance=ExtResource("2_bv5d6")]
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(3, 3)
 position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_set = SubResource("TileSet_30g14")
@@ -187,3 +187,6 @@ navigation_polygon = SubResource("NavigationPolygon_pv4y8")
 
 [node name="CharacterBody2D2" parent="." instance=ExtResource("3_c6o2m")]
 position = Vector2(169, -24)
+
+[node name="ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_ypsnf")]
+player = NodePath("../Player")

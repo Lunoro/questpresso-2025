@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://djfu6oyhayv44"]
+
+[ext_resource type="Script" uid="uid://3vv5s2hau5pr" path="res://Objects/ui.gd" id="1_70ld6"]
+
+[node name="ui" type="CanvasLayer"]
+script = ExtResource("1_70ld6")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 317.0
+offset_bottom = 142.0
+theme_override_font_sizes/font_size = 32
+text = "Health: "
