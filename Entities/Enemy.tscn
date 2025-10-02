@@ -845,7 +845,7 @@ script = ExtResource("1_pfjfy")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_pfjfy")
-animation = &"idle_down"
+animation = &"attack_down"
 
 [node name="FOV" type="Area2D" parent="."]
 rotation = -0.008726646
@@ -887,8 +887,8 @@ target_position = Vector2(0, 259)
 [connection signal="area_entered" from="FOV" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="FOV" to="." method="_on_area_2d_body_exited"]
-[connection signal="timeout" from="Update_Path" to="." method="_on_update_path_timeout"]
 [connection signal="timeout" from="Update_Path" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Update_Path" to="." method="_on_update_path_timeout"]
 [connection signal="area_entered" from="MeleeHit" to="." method="_on_melee_hit_area_entered"]
 [connection signal="area_exited" from="MeleeHit" to="." method="_on_melee_hit_area_exited"]
 [connection signal="body_entered" from="MeleeHit" to="." method="_on_melee_hit_body_entered"]

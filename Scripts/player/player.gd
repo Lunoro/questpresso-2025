@@ -1,4 +1,4 @@
-extends "res://Entities/entities.gd"
+extends "res://Scripts/entities.gd"
 
 @export var speed = 125.0
 @export var damage = 1
@@ -8,9 +8,10 @@ var input_direction
 
 func _ready() -> void:
 	health = 10
-	armor = 3
+	armor = 1
 	attack_cooldown_node = $attack_cooldown #setzt Timer node, bei enemy und player grad gleich benannt, bei Problemen umbenennen
-	attack_cooldown = 5
+	AnimatedSprite = $AnimatedSprite2D
+	#attack_cooldown = 5
 	#target = %player
 	#is_dead = false
 	#knockback_resistance = 0
@@ -34,10 +35,11 @@ func _physics_process(delta):
 		return
 	if (!is_interacting):
 		get_input()
+		move_extra()
 		move_and_slide()
 		change_direction(input_direction.x, input_direction.y)
 		update_area_rotation()
-		update_animation()
+		if not is_attacking: update_animation()
 		listen_for_interact()
 
 func change_direction(x : int, y : int):
@@ -54,22 +56,14 @@ func change_direction(x : int, y : int):
 
 func listen_for_attack():
 	if Input.is_action_just_released("click") && attack_allowed == true:
-		attack()
-		#$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
-		#is_attacking = true
-		#await $AnimatedSprite2D.animation_finished
-		#$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
-
+		attack(5.0, 20.0, 1)
+		
 func update_area_rotation():
 	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (direction_to_rotation());
 	$Interacting.global_rotation_degrees = (direction_to_rotation());
 
-#func _on_sword_hit_area_entered(area: Area2D) -> void:
-	#if is_attacking && area.is_in_group("hitbox") && area.get_parent().name != name:
-		#area.get_parent().damage_taken(5);
-		#print(area.get_parent().name)
-
 func _on_attack_cooldown_timeout() -> void:
+	attack_cooldown_node.stop()
 	attack_allowed = true
 	print("cooldown vorbei player")
 

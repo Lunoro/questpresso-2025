@@ -844,7 +844,7 @@ script = ExtResource("1_2qdoy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_rj586")
-animation = &"attack_down"
+animation = &"attack_right"
 
 [node name="SwordHit" type="Area2D" parent="AnimatedSprite2D"]
 rotation = 1.5707964

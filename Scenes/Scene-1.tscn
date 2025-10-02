@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cu7ag5x3dguu5" path="res://Assets/Pixel_Adventure_1/Terrain/Terrain (16x16).png" id="2_pv4y8"]
 [ext_resource type="PackedScene" uid="uid://cnwlpg303kk11" path="res://Entities/NPC.tscn" id="3_c6o2m"]
 [ext_resource type="PackedScene" uid="uid://brliyf0hak32e" path="res://Entities/Enemy.tscn" id="3_pv4y8"]
-[ext_resource type="Script" uid="uid://jo2rjos7eu3h" path="res://Entities/entities.gd" id="3_ypsnf"]
+[ext_resource type="Script" uid="uid://jo2rjos7eu3h" path="res://Scripts/entities.gd" id="3_ypsnf"]
 [ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/ui.tscn" id="6_ypsnf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cl5pu"]
