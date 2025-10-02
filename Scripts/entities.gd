@@ -4,6 +4,7 @@ enum Direction {LEFT, RIGHT, UP, DOWN}
 var direction : Direction = Direction.DOWN
 @onready var target = %player
 var AnimatedSprite : AnimatedSprite2D
+
 var armor_class = { # wird mit Damage multipliziert
 	0: 1.0,
 	1: 0.8,
@@ -12,6 +13,7 @@ var armor_class = { # wird mit Damage multipliziert
 	4: 0.1,
 	5: 0.05
 }
+
 var health = 10
 var is_dead = false
 var armor = 0
