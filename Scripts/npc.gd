@@ -1,5 +1,9 @@
-extends CharacterBody2D
+extends "res://Scripts/entities.gd"
 
+func _ready() -> void:
+	#AnimatedSprite = $AnimatedSprite2D
+	pass
+	
 @export var player : CharacterBody2D
 var in_interaction = false
 
