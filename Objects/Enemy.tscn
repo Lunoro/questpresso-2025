@@ -873,6 +873,9 @@ shape = SubResource("CircleShape2D_82iww")
 position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_oay0y")
 
+[node name="attack_pause" type="Timer" parent="."]
+one_shot = true
+
 [node name="Update_Aggro" type="Timer" parent="."]
 wait_time = 8.0
 
@@ -883,8 +886,9 @@ target_position = Vector2(0, 259)
 [connection signal="area_entered" from="FOV" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="FOV" to="." method="_on_area_2d_body_exited"]
-[connection signal="timeout" from="Update_Path" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="Update_Path" to="." method="_on_update_path_timeout"]
+[connection signal="timeout" from="Update_Path" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="MeleeHit" to="." method="_on_melee_hit_area_entered"]
 [connection signal="area_exited" from="MeleeHit" to="." method="_on_melee_hit_area_exited"]
+[connection signal="timeout" from="attack_pause" to="." method="_on_attack_pause_timeout"]
 [connection signal="timeout" from="Update_Aggro" to="." method="_on_update_aggro_timeout"]

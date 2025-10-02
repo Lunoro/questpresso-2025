@@ -31,6 +31,7 @@ func damage_taken(amount):
 		is_dead = true
 		health = 0
 		change_animation()
+	if health < 0: health = 0;
 
 func get_input():
 	if(is_attacking):

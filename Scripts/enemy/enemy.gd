@@ -11,6 +11,7 @@ var direction = Direction.DOWN
 var is_triggered = false
 var in_sight = false
 var in_melee = false
+var attack_timeout = false
 
 var is_attacking = false
 var is_moving = false
@@ -52,7 +53,7 @@ func find_path():
 		return
 		
 	if distance_to_player < 20:
-		attack()
+		if  %Player.is_dead == false: attack()
 		velocity = Vector2(0,0)
 		return
 	
@@ -128,9 +129,12 @@ func attack() -> void:
 	is_attacking = true
 	update_animation()
 	await $AnimatedSprite2D.animation_finished
-	if in_melee == "Player": 
+	if in_melee == "Player" && attack_timeout == false: 
 		%Player.damage_taken(5)
 	is_attacking = false
+	attack_timeout = true
+	$attack_pause.start(-1)
+	
 
 func _on_melee_hit_area_entered(area: Area2D) -> void:
 	in_melee = "Player"
@@ -159,3 +163,6 @@ func _on_update_aggro_timeout() -> void:
 	print("triggered")
 	is_triggered = false
 	$Update_Aggro.stop()
+
+func _on_attack_pause_timeout() -> void:
+	attack_timeout = false
