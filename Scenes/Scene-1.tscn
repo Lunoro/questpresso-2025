@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://ci2q6fuq8rkrk"]
+[gd_scene load_steps=10 format=4 uid="uid://ci2q6fuq8rkrk"]
 
-[ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Objects/Player.tscn" id="1_y34fs"]
+[ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player.tscn" id="1_y34fs"]
 [ext_resource type="Texture2D" uid="uid://cu7ag5x3dguu5" path="res://Assets/Pixel_Adventure_1/Terrain/Terrain (16x16).png" id="2_pv4y8"]
-[ext_resource type="PackedScene" uid="uid://cnwlpg303kk11" path="res://Objects/NPC.tscn" id="3_c6o2m"]
-[ext_resource type="PackedScene" uid="uid://brliyf0hak32e" path="res://Objects/Enemy.tscn" id="3_pv4y8"]
-[ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/ui.tscn" id="6_ypsnf"]
+[ext_resource type="PackedScene" uid="uid://cnwlpg303kk11" path="res://Entities/NPC.tscn" id="3_c6o2m"]
+[ext_resource type="PackedScene" uid="uid://brliyf0hak32e" path="res://Entities/Enemy.tscn" id="3_pv4y8"]
+[ext_resource type="PackedScene" uid="uid://c8q66clyp2per" path="res://Entities/Boss/boss.tscn" id="6_c2ibx"]
+[ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/UI/ui.tscn" id="6_ypsnf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cl5pu"]
 texture = ExtResource("2_pv4y8")
@@ -165,11 +166,17 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-232, -126, -230, 130, 
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Player" parent="." instance=ExtResource("1_y34fs")]
+[node name="enemy" parent="." instance=ExtResource("3_pv4y8")]
+position = Vector2(-102, -105)
+
+[node name="npc" parent="." instance=ExtResource("3_c6o2m")]
+position = Vector2(169, -24)
+
+[node name="player" parent="." instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
 position = Vector2(78, 22)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
@@ -180,16 +187,11 @@ tile_map_data = PackedByteArray("AAD7/wAAAAASAAUAAAD7/wEAAAASAAUAAAD7/wIAAAASAAU
 tile_set = SubResource("TileSet_30g14")
 collision_visibility_mode = 1
 
-[node name="CharacterBody2D" parent="." node_paths=PackedStringArray("target") instance=ExtResource("3_pv4y8")]
-position = Vector2(-102, -105)
-target = NodePath("../Player")
-speed = 50
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_pv4y8")
 
-[node name="CharacterBody2D2" parent="." instance=ExtResource("3_c6o2m")]
-position = Vector2(169, -24)
-
 [node name="ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_ypsnf")]
-player = NodePath("../Player")
+player = NodePath("../player")
+
+[node name="Boss" parent="." instance=ExtResource("6_c2ibx")]
+position = Vector2(113, -70)

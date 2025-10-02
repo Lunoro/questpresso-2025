@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://c8q66clyp2per"]
+[gd_scene load_steps=25 format=3 uid="uid://c8q66clyp2per"]
 
 [ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="1_kofeu"]
+[ext_resource type="Script" uid="uid://byd0xfl8ow4s1" path="res://Entities/Boss/boss.gd" id="1_y4shp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kofeu"]
 atlas = ExtResource("1_kofeu")
@@ -100,7 +101,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4b386")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_left",
 "speed": 3.0
 }, {
@@ -120,7 +121,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_55w55")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_right",
 "speed": 5.0
 }, {
@@ -137,7 +138,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nkxek")
 }],
-"loop": true,
+"loop": false,
 "name": &"idle",
 "speed": 2.0
 }, {
@@ -160,20 +161,28 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wlb6t")
 }],
-"loop": true,
+"loop": false,
 "name": &"teleport",
 "speed": 5.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_np8sd"]
-radius = 20.0
-height = 54.0
+radius = 18.0
+height = 36.0
 
 [node name="Boss" type="CharacterBody2D"]
+script = ExtResource("1_y4shp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_70fya")
-animation = &"idle"
+animation = &"teleport"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_np8sd")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
