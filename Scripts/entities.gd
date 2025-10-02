@@ -15,6 +15,7 @@ var armor_class = { # wird mit Damage multipliziert
 }
 
 var health = 10
+var max_health = 10
 var is_dead = false
 var armor = 0
 var knockback_resistance = 0
@@ -53,6 +54,7 @@ func move_extra():
 	velocity += move_extra_buffer
 
 func update_animation():
+	if typeof(AnimatedSprite) == 0: return
 	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
 	if(is_moving):
 		animation_name = "move_" + Direction.keys()[direction].to_lower()

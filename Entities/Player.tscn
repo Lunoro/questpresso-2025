@@ -1,8 +1,9 @@
-[gd_scene load_steps=126 format=3 uid="uid://d0b424myd7i3u"]
+[gd_scene load_steps=129 format=3 uid="uid://d0b424myd7i3u"]
 
 [ext_resource type="Script" uid="uid://dnlss3gbhjecj" path="res://Scripts/player/player.gd" id="1_2qdoy"]
 [ext_resource type="Texture2D" uid="uid://1ofxnn85cbyi" path="res://Assets/RPG_Hero/idle/idle_down_40x40.png" id="2_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://c2oas2xs6mi84" path="res://Assets/RPG_Hero/attack/attack_down_40x40.png" id="2_dmq7b"]
+[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_opvli"]
 [ext_resource type="Texture2D" uid="uid://clwqcuaul7bfe" path="res://Assets/RPG_Hero/attack/attack_left_40x40.png" id="3_kwjl5"]
 [ext_resource type="Texture2D" uid="uid://4847o6ejngxv" path="res://Assets/RPG_Hero/idle/idle_left_40x40.png" id="3_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://b3sqkj2j7jbmo" path="res://Assets/RPG_Hero/idle/idle_right_40x40.png" id="4_dtqjt"]
@@ -17,6 +18,10 @@
 [ext_resource type="Texture2D" uid="uid://d2erbxamckaum" path="res://Assets/RPG_Hero/death/death_right_40x40.png" id="8_5v5v8"]
 [ext_resource type="Texture2D" uid="uid://d07gxo2xtkq8g" path="res://Assets/RPG_Hero/run/run_up_40x40.png" id="9_l6ohk"]
 [ext_resource type="Texture2D" uid="uid://cglb2lk3g785x" path="res://Assets/RPG_Hero/death/death_up_40x40.png" id="9_lu7jm"]
+[ext_resource type="PackedScene" uid="uid://8gmwg0wpj41r" path="res://Entities/health_bar.tscn" id="19_a0vkg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0vkg"]
+shader = ExtResource("2_opvli")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ywb4b"]
 atlas = ExtResource("2_dmq7b")
@@ -843,6 +848,7 @@ collision_mask = 3
 script = ExtResource("1_2qdoy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_a0vkg")
 sprite_frames = SubResource("SpriteFrames_rj586")
 animation = &"attack_right"
 
@@ -875,6 +881,9 @@ disabled = true
 
 [node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 2.0
+
+[node name="health_bar" parent="." instance=ExtResource("19_a0vkg")]
+position = Vector2(0, -19)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="area_entered" from="AnimatedSprite2D/SwordHit" to="." method="_on_sword_hit_area_entered"]

@@ -1,10 +1,8 @@
-extends CharacterBody2D
+extends "res://Scripts/entities.gd"
 
 # TODO: Bossfight -> Boss teleports infront of player
 #			-> Brainstorm some attacks maybe spikes
 #			-> Just get a working bossfight till tomorow
-
-@onready var target : CharacterBody2D= %player
 
 var player_position:Vector2
 
