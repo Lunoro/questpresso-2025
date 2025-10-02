@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends "res://Entities/entities.gd"
 
 @export var player : CharacterBody2D
 var in_interaction = false

@@ -829,14 +829,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_82iww"]
-size = Vector2(178.99545, 223.56393)
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_y7ed5"]
+points = PackedVector2Array(35, -160, 150, 110, -150, 110, -35, -160)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_elc20"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_82iww"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_oay0y"]
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_lu8ly"]
+points = PackedVector2Array(-10, 0, 10, 0, 20, 30, -20, 30)
 
 [node name="Enemy" type="CharacterBody2D"]
 script = ExtResource("1_pfjfy")
@@ -852,7 +853,7 @@ rotation = -0.008726646
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FOV"]
 position = Vector2(-1.0000033, 137.59875)
 scale = Vector2(1.095, 1.095)
-shape = SubResource("RectangleShape2D_82iww")
+shape = SubResource("ConvexPolygonShape2D_y7ed5")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
@@ -870,10 +871,10 @@ shape = SubResource("CircleShape2D_82iww")
 [node name="MeleeHit" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHit"]
-position = Vector2(0, 24)
-shape = SubResource("RectangleShape2D_oay0y")
+shape = SubResource("ConvexPolygonShape2D_lu8ly")
 
-[node name="attack_pause" type="Timer" parent="."]
+[node name="attack_cooldown" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="Update_Aggro" type="Timer" parent="."]
@@ -890,5 +891,7 @@ target_position = Vector2(0, 259)
 [connection signal="timeout" from="Update_Path" to="." method="_on_timer_timeout"]
 [connection signal="area_entered" from="MeleeHit" to="." method="_on_melee_hit_area_entered"]
 [connection signal="area_exited" from="MeleeHit" to="." method="_on_melee_hit_area_exited"]
-[connection signal="timeout" from="attack_pause" to="." method="_on_attack_pause_timeout"]
+[connection signal="body_entered" from="MeleeHit" to="." method="_on_melee_hit_body_entered"]
+[connection signal="body_exited" from="MeleeHit" to="." method="_on_melee_hit_body_exited"]
+[connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="Update_Aggro" to="." method="_on_update_aggro_timeout"]

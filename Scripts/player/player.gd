@@ -1,43 +1,29 @@
-extends CharacterBody2D
-
-enum Direction {LEFT, RIGHT, UP, DOWN}
+extends "res://Entities/entities.gd"
 
 @export var speed = 125.0
 @export var damage = 1
-# test
 
-var health = 10.0
-var armor = 1
-var armor_class = { # wird mit Damage multipliziert
-	0: 1.0,
-	1: 0.8,
-	2: 0.5,
-	3: 0.25,
-	4: 0.1,
-	5: 0.05
-}
-
-var direction : Direction = Direction.DOWN
-var is_moving = false
-var is_attacking = false
-var is_dead = false
 var is_interacting = false
-
 var input_direction
 
-func damage_taken(amount):
-	health -= amount * armor_class[armor]
-	if health <= 0 && is_dead == false:
-		is_dead = true
-		health = 0
-		change_animation()
-	if health < 0: health = 0;
+func _ready() -> void:
+	health = 10
+	armor = 3
+	attack_cooldown_node = $attack_cooldown #setzt Timer node, bei enemy und player grad gleich benannt, bei Problemen umbenennen
+	attack_cooldown = 5
+	#target = %player
+	#is_dead = false
+	#knockback_resistance = 0
+	#is_moving = false
+	#direction = Direction.DOWN
+	#is_attacking = false
+	#attack_allowed = true
+	#in_melee
 
 func get_input():
 	if(is_attacking):
 		velocity = Vector2(0, 0);
-		return
-
+		return;
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	listen_for_attack()
 	velocity = input_direction * speed
@@ -46,32 +32,13 @@ func get_input():
 func _physics_process(delta):
 	if is_dead: 
 		return
-		
 	if (!is_interacting):
 		get_input()
 		move_and_slide()
 		change_direction(input_direction.x, input_direction.y)
 		update_area_rotation()
-		change_animation()
-		listen_for_interact();
-		
-# animation block
-	
-func change_animation():
-	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
-	
-	if(is_moving):
-		animation_name = "move_" + Direction.keys()[direction].to_lower()
-		
-	if(is_attacking):
-		animation_name = "attack_" + Direction.keys()[direction].to_lower()
-	
-	if(is_dead):
-		animation_name = "die_" + Direction.keys()[direction].to_lower()
-
-	$AnimatedSprite2D.play(animation_name)
-	await $AnimatedSprite2D.animation_finished
-	is_attacking = false
+		update_animation()
+		listen_for_interact()
 
 func change_direction(x : int, y : int):
 	if x > 0:
@@ -86,32 +53,31 @@ func change_direction(x : int, y : int):
 # fight block
 
 func listen_for_attack():
-	if Input.is_action_just_released("click"):
-		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
-		is_attacking = true
-		await $AnimatedSprite2D.animation_finished
-		$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
+	if Input.is_action_just_released("click") && attack_allowed == true:
+		attack()
+		#$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = false
+		#is_attacking = true
+		#await $AnimatedSprite2D.animation_finished
+		#$AnimatedSprite2D/SwordHit/CollisionShape2D.disabled = true
 
 func update_area_rotation():
-	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (get_area_rotation());
-	$Interacting.global_rotation_degrees = (get_area_rotation());
+	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (direction_to_rotation());
+	$Interacting.global_rotation_degrees = (direction_to_rotation());
 
-func get_area_rotation() -> int:
-	var transform_rotation = 0; 
-	
-	if(direction == Direction.LEFT) :
-		transform_rotation = 90
-	if(direction == Direction.RIGHT) :
-		transform_rotation = -90
-	if(direction == Direction.UP) :
-		transform_rotation = 180
-	
-	return transform_rotation
+#func _on_sword_hit_area_entered(area: Area2D) -> void:
+	#if is_attacking && area.is_in_group("hitbox") && area.get_parent().name != name:
+		#area.get_parent().damage_taken(5);
+		#print(area.get_parent().name)
 
-func _on_sword_hit_area_entered(area: Area2D) -> void:
-	if is_attacking && area.is_in_group("hitbox") && area.get_parent().name != name:
-		area.get_parent().damage_taken(5);
-		print(area.get_parent().name)
+func _on_attack_cooldown_timeout() -> void:
+	attack_allowed = true
+	print("cooldown vorbei player")
+
+func _on_melee_hit_body_entered(body: Node2D) -> void: #TODO für mehrere Objekte in Hitbox gleichzeitig umgestalten
+	in_melee = body
+
+func _on_melee_hit_body_exited(body: Node2D) -> void:
+	in_melee = false
 
 # Interaction Block
 
