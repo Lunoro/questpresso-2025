@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 enum Direction {LEFT, RIGHT, UP, DOWN}
 var direction : Direction = Direction.DOWN
-@onready var target = %player
+var target
 var AnimatedSprite : AnimatedSprite2D
 
 var armor_class = { # wird mit Damage multipliziert
@@ -29,6 +29,10 @@ var attack_cooldown_node
 #@onready var attack_cooldown_node = $attack_cooldown
 var move_extra_input = Vector2(0,0)
 var move_extra_buffer = Vector2(0,0)
+
+func init():
+	target = get_tree().get_first_node_in_group("player")
+	print("Target is: ", target)
 
 func damage_taken(amount):
 	health -= amount * armor_class[armor]

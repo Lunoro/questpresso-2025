@@ -9,3 +9,5 @@ shader = ExtResource("1_63hv8")
 [node name="entities" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_2oy84")
 script = ExtResource("1_h3n4y")
+
+[connection signal="ready" from="." to="." method="_on_ready"]

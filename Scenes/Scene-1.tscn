@@ -76,7 +76,7 @@ position = Vector2(-102, -105)
 material = SubResource("ShaderMaterial_gnb0f")
 position = Vector2(169, -24)
 
-[node name="player" parent="." instance=ExtResource("1_y34fs")]
+[node name="player" parent="." groups=["player"] instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
 z_index = 100
 material = SubResource("ShaderMaterial_c2ibx")
