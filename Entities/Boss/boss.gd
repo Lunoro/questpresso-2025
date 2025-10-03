@@ -4,6 +4,9 @@ extends "res://Scripts/entities.gd"
 #			-> Brainstorm some attacks maybe spikes
 #			-> Just get a working bossfight till tomorow
 #			-> add attack to spawn 
+#			-> Phase: one and two
+#				-> one: normal attacks and spawns
+#				-> two: shuriken and spawns, sometimes normal attacks
 
 @onready var player : CharacterBody2D = %player
 @export var enemy_scene: PackedScene = preload("res://Entities/Enemy.tscn")
@@ -12,6 +15,7 @@ var player_position:Vector2
 
 
 func _ready() -> void:
+	$Entrance.start()
 	health = 300
 	armor = 5
 	attack_cooldown_node = $attack_cooldown
@@ -29,6 +33,9 @@ func _physics_process(delta: float) -> void:
 		shuriken_circle_attack()
 		#attack(0, 0, 0)
 		#summon_enemy_attack()
+		
+func spawn():
+	$AnimatedSprite2D.play_backwards("teleport")
 	
 func position_check():
 	if (player_position.y < global_position.y):
@@ -81,7 +88,7 @@ func shuriken_circle_attack():
 	var radius = 30
 	
 	for i in num_shuriken:
-		var angle = (TAU / num_shuriken) * i
+		var angle = (TAU / num_shuriken + randi_range(0, 20)) * i
 		var shuriken = preload("res://Entities/Boss/shuriken.tscn").instantiate()
 		
 		shuriken.global_position = global_position + Vector2(cos(angle), sin(angle)) * radius
@@ -90,3 +97,6 @@ func shuriken_circle_attack():
 		shuriken.speed = 100
 		
 		get_tree().current_scene.add_child(shuriken)
+
+func _on_entrance_timeout() -> void:
+	spawn()

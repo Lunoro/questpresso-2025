@@ -71,6 +71,10 @@ region = Rect2(142, 1, 64, 76)
 atlas = ExtResource("1_kofeu")
 region = Rect2(206, 1, 64, 76)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlb6t"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(259, 634, 41, 76)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_rbge0"]
 atlas = ExtResource("1_kofeu")
 region = Rect2(176, 640, 15, 15)
@@ -90,10 +94,6 @@ region = Rect2(286, 556, 66, 88)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ga304"]
 atlas = ExtResource("1_kofeu")
 region = Rect2(341, 558, 41, 76)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wlb6t"]
-atlas = ExtResource("1_kofeu")
-region = Rect2(259, 634, 41, 76)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_70fya"]
 animations = [{
@@ -176,6 +176,23 @@ animations = [{
 "loop": true,
 "name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlb6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlb6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlb6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlb6t")
+}],
+"loop": true,
+"name": &"none",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -315,10 +332,8 @@ script = ExtResource("1_y4shp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_01fwt")
 sprite_frames = SubResource("SpriteFrames_70fya")
-animation = &"attack_2"
-autoplay = "idle"
-frame = 2
-frame_progress = 0.9781025
+animation = &"none"
+autoplay = "none"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
@@ -347,5 +362,9 @@ material = SubResource("ShaderMaterial_nkxek")
 position = Vector2(50, 0)
 sprite_frames = SubResource("SpriteFrames_7tu1h")
 
+[node name="Entrance" type="Timer" parent="."]
+wait_time = 3.0
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Entrance" to="." method="_on_entrance_timeout"]
