@@ -15,6 +15,7 @@ func _ready() -> void:
 	armor = 3
 	attack_cooldown_node = $attack_cooldown #setzt Timer node
 	AnimatedSprite = $AnimatedSprite2D
+	max_health = 10
 	#attack_cooldown = 5
 	#target = %player
 	#is_dead = false
