@@ -4,21 +4,28 @@ extends "res://Scripts/entities.gd"
 #			-> Brainstorm some attacks maybe spikes
 #			-> Just get a working bossfight till tomorow
 #			-> add attack to spawn 
+#			-> Phase: one and two
+#				-> one: normal attacks and spawns
+#				-> two: shuriken and spawns, sometimes normal attacks
 
 @onready var player : CharacterBody2D = %player
 @export var enemy_scene: PackedScene = preload("res://Entities/Enemy.tscn")
 
 var player_position:Vector2
 
-
 func _ready() -> void:
-	health = 300
-	armor = 5
+	$Entrance.start()
+	health = 1
+	armor = 1
 	attack_cooldown_node = $attack_cooldown
 	AnimatedSprite = $AnimatedSprite2D
+	
+	await $AnimatedSprite2D.animation_finished
+	fight()
 
 func _physics_process(delta: float) -> void:
 	if(is_dead):
+		despawn()
 		return
 
 	position_check()
@@ -29,6 +36,35 @@ func _physics_process(delta: float) -> void:
 		shuriken_circle_attack()
 		#attack(0, 0, 0)
 		#summon_enemy_attack()
+	
+func fight():
+	if ((health / max_health) < 0.5):
+		attack_random(1, 2)
+		return
+	attack_random(0, 1)
+		
+# attack cooldown bestimmt pace und sucht random attacken um auszuführen
+# Änderung des paces pro attack: Summon 30sec to kill the enemies
+# Normal attack 2seconds
+# Shuriken just the animation
+
+func attack_random(x: int, y: int):
+	
+	match randi_range(x, y):
+		0: attack(0, 0, 0)
+		1: summon_enemy_attack()
+		2: shuriken_circle_attack()
+		
+
+func _on_attack_cooldown_timeout() -> void:
+	fight()
+		
+func spawn():
+	$AnimatedSprite2D.play_backwards("teleport")
+	
+func despawn():
+	$AnimatedSprite2D.play("teleport")
+
 	
 func position_check():
 	if (player_position.y < global_position.y):
@@ -45,6 +81,9 @@ func _on_timer_timeout() -> void:
 	teleport()
 
 func _on_animated_sprite_2d_animation_finished() -> void:
+	if(is_dead):
+		queue_free()
+		return
 	$AnimatedSprite2D.play("idle")
 	$Summon1.play("default")
 	$Summon2.play("default")
@@ -59,6 +98,7 @@ func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> v
 	
 	var animation_name = "attack_" + direction_of_anim[random]
 	$AnimatedSprite2D.play(animation_name)
+	$attack_cooldown.start(2)
 	
 func summon_enemy_attack():
 	$AnimatedSprite2D.play("summon")
@@ -67,6 +107,7 @@ func summon_enemy_attack():
 	spawn_enemy(Vector2(50, 0))
 	spawn_enemy(Vector2(-50, 0))
 	await $AnimatedSprite2D.animation_finished
+	$attack_cooldown.start(60)
 
 func spawn_enemy(position_to_boss: Vector2):
 	if enemy_scene:
@@ -81,7 +122,7 @@ func shuriken_circle_attack():
 	var radius = 30
 	
 	for i in num_shuriken:
-		var angle = (TAU / num_shuriken) * i
+		var angle = (TAU / num_shuriken + randi_range(0, 20)) * i
 		var shuriken = preload("res://Entities/Boss/shuriken.tscn").instantiate()
 		
 		shuriken.global_position = global_position + Vector2(cos(angle), sin(angle)) * radius
@@ -90,3 +131,8 @@ func shuriken_circle_attack():
 		shuriken.speed = 100
 		
 		get_tree().current_scene.add_child(shuriken)
+
+	$attack_cooldown.start()
+	
+func _on_entrance_timeout() -> void:
+	spawn()
