@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://ci2q6fuq8rkrk"]
+[gd_scene load_steps=16 format=4 uid="uid://ci2q6fuq8rkrk"]
 
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player.tscn" id="1_y34fs"]
 [ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_ivdeq"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="6_4h54k"]
 [ext_resource type="PackedScene" uid="uid://c8q66clyp2per" path="res://Entities/Boss/boss.tscn" id="6_c2ibx"]
 [ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/UI/ui.tscn" id="6_ypsnf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ivdeq"]
+shader = ExtResource("2_ivdeq")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1n0f6"]
 shader = ExtResource("2_ivdeq")
@@ -66,6 +69,7 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-232, -126, -230, 130, 
 shader = ExtResource("2_ivdeq")
 
 [node name="Node2D" type="Node2D"]
+material = SubResource("ShaderMaterial_ivdeq")
 
 [node name="enemy" parent="." instance=ExtResource("3_pv4y8")]
 material = SubResource("ShaderMaterial_1n0f6")

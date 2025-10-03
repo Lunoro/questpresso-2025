@@ -1,7 +1,11 @@
-[gd_scene load_steps=35 format=3 uid="uid://c8q66clyp2per"]
+[gd_scene load_steps=38 format=3 uid="uid://c8q66clyp2per"]
 
 [ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="1_kofeu"]
 [ext_resource type="Script" uid="uid://byd0xfl8ow4s1" path="res://Entities/Boss/boss.gd" id="1_y4shp"]
+[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_ssfxk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_01fwt"]
+shader = ExtResource("2_ssfxk")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kofeu"]
 atlas = ExtResource("1_kofeu")
@@ -191,6 +195,9 @@ height = 36.0
 radius = 11.998522
 height = 43.994576
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkxek"]
+shader = ExtResource("2_ssfxk")
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_7tu1h"]
 atlas = ExtResource("1_kofeu")
 region = Rect2(145, 231, 62, 38)
@@ -264,6 +271,7 @@ animations = [{
 script = ExtResource("1_y4shp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_01fwt")
 sprite_frames = SubResource("SpriteFrames_70fya")
 animation = &"summon"
 autoplay = "idle_down"
@@ -288,10 +296,12 @@ shape = SubResource("CapsuleShape2D_y4shp")
 [node name="attack_cooldown" type="Timer" parent="."]
 
 [node name="Summon2" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_nkxek")
 position = Vector2(-50, 0)
 sprite_frames = SubResource("SpriteFrames_7tu1h")
 
 [node name="Summon1" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_nkxek")
 position = Vector2(50, 0)
 sprite_frames = SubResource("SpriteFrames_7tu1h")
 

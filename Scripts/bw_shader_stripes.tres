@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=17 format=3 uid="uid://dtw07waqncqde"]
+[gd_resource type="VisualShader" load_steps=17 format=3 uid="uid://c80yue26bptoj"]
 
 [sub_resource type="VisualShaderNodeCompare" id="VisualShaderNodeCompare_5vdt1"]
 default_input_values = [0, 0.0, 1, 0.8, 2, 1e-05]
