@@ -1,17 +1,17 @@
 extends "res://Scripts/entities.gd"
 
-@export var speed = 125.0
-@export var damage = 1
-
 var is_interacting = false
 var input_direction
 
 func _ready() -> void:
-	health = 10
-	armor = 1
+	speed_base = 125
+	max_health = 20
+	health = 20
+	armor = 0
 	attack_cooldown_node = $attack_cooldown #setzt Timer node, bei enemy und player grad gleich benannt, bei Problemen umbenennen
+	attack_cooldown_base = 1
+	knockback_base = 100
 	AnimatedSprite = $AnimatedSprite2D
-	max_health = 10
 	#attack_cooldown = 5
 	#target = %player
 	#is_dead = false
@@ -21,14 +21,15 @@ func _ready() -> void:
 	#is_attacking = false
 	#attack_allowed = true
 	#in_melee
+	collision_shape_diameter = 14
 
 func get_input():
 	if(is_attacking):
 		velocity = Vector2(0, 0);
-		return;
+		return
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	listen_for_attack()
-	velocity = input_direction * speed
+	velocity = input_direction * speed_multiplier * speed_base
 	is_moving = velocity.x != 0 || velocity.y != 0
 	
 func _physics_process(delta):
@@ -57,22 +58,25 @@ func change_direction(x : int, y : int):
 
 func listen_for_attack():
 	if Input.is_action_just_released("click") && attack_allowed == true:
-		attack(5.0, 20.0, 1)
+		attack(5.0, knockback_base * knockback_multiplier, attack_cooldown_base * attack_cooldown_multiplier)
 		
 func update_area_rotation():
 	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (direction_to_rotation());
 	$Interacting.global_rotation_degrees = (direction_to_rotation());
 
 func _on_attack_cooldown_timeout() -> void:
-	attack_cooldown_node.stop()
+	#attack_cooldown_node.stop()
 	attack_allowed = true
-	print("cooldown vorbei player")
 
-func _on_melee_hit_body_entered(body: Node2D) -> void: #TODO für mehrere Objekte in Hitbox gleichzeitig umgestalten
-	in_melee = body
+func _on_melee_hit_area_entered(area: Node2D) -> void: #TODO für mehrere Objekte in Hitbox gleichzeitig umgestalten
+	if area.name.contains("marker") && in_melee.find(area.get_parent()) == -1:
+		in_melee.append(area.get_parent())
+	#print(str(in_melee) + " in       " + area.name)
 
-func _on_melee_hit_body_exited(body: Node2D) -> void:
-	in_melee = false
+func _on_melee_hit_area_exited(area: Node2D) -> void:
+	if area.name.contains("marker") && in_melee.find(area.get_parent()) != -1:
+		in_melee.erase(area.get_parent())
+	#print(str(in_melee) + " out       " + area.name)
 
 # Interaction Block
 

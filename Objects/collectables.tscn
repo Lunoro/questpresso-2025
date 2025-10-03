@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=3 uid="uid://bh365u5asy64d"]
+
+[ext_resource type="Script" uid="uid://ci23ylwu5eaaj" path="res://Objects/collectables.gd" id="1_sb6yg"]
+[ext_resource type="Texture2D" uid="uid://b8xivvfn1bmah" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion1.png" id="2_atlv6"]
+[ext_resource type="Texture2D" uid="uid://bxo6rq3gn13mo" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion2.png" id="3_apich"]
+[ext_resource type="Texture2D" uid="uid://d0t3lfc60gas8" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion3.png" id="4_hkic6"]
+[ext_resource type="Texture2D" uid="uid://p2s61kw1f1rn" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion4.png" id="5_68iew"]
+[ext_resource type="Texture2D" uid="uid://cxhhlxdrvis0g" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion-outline1.png" id="6_h3m33"]
+[ext_resource type="Texture2D" uid="uid://cshhhtro1i1i6" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion-outline2.png" id="7_uqulr"]
+[ext_resource type="Texture2D" uid="uid://d0rwaya3r4fkc" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion-outline3.png" id="8_8l05d"]
+[ext_resource type="Texture2D" uid="uid://dfmehlw5q00sq" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion-outline4.png" id="9_5rwjg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jpjvu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_atlv6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_apich")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_hkic6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_68iew")
+}],
+"loop": true,
+"name": &"heal",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_h3m33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_uqulr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8l05d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_5rwjg")
+}],
+"loop": true,
+"name": &"speed",
+"speed": 5.0
+}]
+
+[node name="Collectables" type="Node2D"]
+scale = Vector2(0.4876657, 0.4876657)
+script = ExtResource("1_sb6yg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_jpjvu")
+animation = &"heal"
+
+[node name="Timer_Speed" type="Timer" parent="."]
+
+[node name="Timer_Haste" type="Timer" parent="."]
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="timeout" from="Timer_Speed" to="." method="_on_timer_speed_timeout"]
+[connection signal="timeout" from="Timer_Haste" to="." method="_on_timer_haste_timeout"]
