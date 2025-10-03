@@ -68,6 +68,7 @@ shader = ExtResource("2_ivdeq")
 [node name="Node2D" type="Node2D"]
 
 [node name="enemy" parent="." instance=ExtResource("3_pv4y8")]
+z_index = 90
 material = SubResource("ShaderMaterial_1n0f6")
 position = Vector2(-102, -105)
 
@@ -77,6 +78,7 @@ position = Vector2(169, -24)
 
 [node name="player" parent="." instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
+z_index = 100
 material = SubResource("ShaderMaterial_c2ibx")
 position = Vector2(78, 22)
 
