@@ -47,7 +47,11 @@ func find_path(): #und start attack
 		is_moving = false;
 		velocity = Vector2(0,0)
 		return
-		
+	
+	if distance_to_player < 18: 
+		knockback(10,%player.position, self)
+		knockback(10,self.position, %player)	
+	
 	if distance_to_player < 20:
 		if  target.is_dead == false && attack_allowed == true: 
 			attack(5, 50, 3)

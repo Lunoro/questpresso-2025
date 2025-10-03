@@ -868,13 +868,11 @@ shape = SubResource("ConvexPolygonShape2D_y7ed5")
 autostart = true
 
 [node name="Hitbox" type="Area2D" parent="." groups=["hitbox"]]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_elc20")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_82iww")
 
 [node name="MeleeHit" type="Area2D" parent="."]
@@ -900,8 +898,8 @@ position = Vector2(0, -19)
 [connection signal="area_entered" from="FOV" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="FOV" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="FOV" to="." method="_on_area_2d_body_exited"]
-[connection signal="timeout" from="Update_Path" to="." method="_on_update_path_timeout"]
 [connection signal="timeout" from="Update_Path" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Update_Path" to="." method="_on_update_path_timeout"]
 [connection signal="area_entered" from="MeleeHit" to="." method="_on_melee_hit_area_entered"]
 [connection signal="area_exited" from="MeleeHit" to="." method="_on_melee_hit_area_exited"]
 [connection signal="body_entered" from="MeleeHit" to="." method="_on_melee_hit_body_entered"]
