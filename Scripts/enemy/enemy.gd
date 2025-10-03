@@ -10,6 +10,7 @@ var in_sight = false
 var is_fighting
 
 func _ready() -> void:
+	init()
 	health = 10
 	armor = 3
 	attack_cooldown_node = $attack_cooldown #setzt Timer node
@@ -47,7 +48,7 @@ func find_path(): #und start attack
 		return
 		
 	if distance_to_player < 20:
-		if  %player.is_dead == false && attack_allowed == true: 
+		if  target.is_dead == false && attack_allowed == true: 
 			attack(5, 50, 3)
 		velocity = Vector2(0,0)
 		is_moving = false
@@ -98,3 +99,7 @@ func _on_update_aggro_timeout() -> void:
 	print("triggered")
 	is_triggered = false
 	$Update_Aggro.stop()
+
+
+func _on_node_2d_ready() -> void:
+	pass # Replace with function body.

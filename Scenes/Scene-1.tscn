@@ -172,7 +172,7 @@ position = Vector2(-102, -105)
 [node name="npc" parent="." instance=ExtResource("3_c6o2m")]
 position = Vector2(169, -24)
 
-[node name="player" parent="." instance=ExtResource("1_y34fs")]
+[node name="player" parent="." groups=["player"] instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
 position = Vector2(78, 22)
 
@@ -194,4 +194,7 @@ navigation_polygon = SubResource("NavigationPolygon_pv4y8")
 player = NodePath("../player")
 
 [node name="Boss" parent="." instance=ExtResource("6_c2ibx")]
+z_index = -1
 position = Vector2(113, -70)
+
+[connection signal="ready" from="." to="enemy" method="_on_node_2d_ready"]

@@ -4,3 +4,5 @@
 
 [node name="entities" type="CharacterBody2D"]
 script = ExtResource("1_h3n4y")
+
+[connection signal="ready" from="." to="." method="_on_ready"]

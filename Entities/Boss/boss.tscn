@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c8q66clyp2per"]
+[gd_scene load_steps=35 format=3 uid="uid://c8q66clyp2per"]
 
 [ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="1_kofeu"]
 [ext_resource type="Script" uid="uid://byd0xfl8ow4s1" path="res://Entities/Boss/boss.gd" id="1_y4shp"]
@@ -138,9 +138,26 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nkxek")
 }],
+"loop": true,
+"name": &"idle_down",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyqh8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyqh8")
+}],
 "loop": false,
-"name": &"idle",
-"speed": 2.0
+"name": &"summon",
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -170,19 +187,113 @@ animations = [{
 radius = 18.0
 height = 36.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4shp"]
+radius = 11.998522
+height = 43.994576
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tu1h"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(145, 231, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqm4t"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(207, 231, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_su617"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(269, 231, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5f6e"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(21, 79, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxl2v"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(83, 79, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5clk"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(145, 79, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlvvx"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(207, 79, 62, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hsh2v"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(269, 79, 62, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7tu1h"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tu1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqm4t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_su617")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5f6e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxl2v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5clk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xlvvx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hsh2v")
+}],
+"loop": false,
+"name": &"summon",
+"speed": 5.0
+}]
+
 [node name="Boss" type="CharacterBody2D"]
 script = ExtResource("1_y4shp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_70fya")
-animation = &"teleport"
+animation = &"summon"
+autoplay = "idle_down"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_np8sd")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 20.0
 autostart = true
 
+[node name="Attack_Range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack_Range"]
+position = Vector2(2.9802315e-08, 27.999998)
+rotation = -1.5865043
+shape = SubResource("CapsuleShape2D_y4shp")
+
+[node name="attack_cooldown" type="Timer" parent="."]
+
+[node name="Summon2" type="AnimatedSprite2D" parent="."]
+position = Vector2(-50, 0)
+sprite_frames = SubResource("SpriteFrames_7tu1h")
+
+[node name="Summon1" type="AnimatedSprite2D" parent="."]
+position = Vector2(50, 0)
+sprite_frames = SubResource("SpriteFrames_7tu1h")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
