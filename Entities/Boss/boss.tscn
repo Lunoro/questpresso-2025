@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://c8q66clyp2per"]
+[gd_scene load_steps=40 format=3 uid="uid://c8q66clyp2per"]
 
 [ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="1_kofeu"]
 [ext_resource type="Script" uid="uid://byd0xfl8ow4s1" path="res://Entities/Boss/boss.gd" id="1_y4shp"]
@@ -6,6 +6,14 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01fwt"]
 shader = ExtResource("2_ssfxk")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kyqh8"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(15, 554, 63, 88)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2lru"]
+atlas = ExtResource("1_kofeu")
+region = Rect2(93, 554, 67, 88)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kofeu"]
 atlas = ExtResource("1_kofeu")
@@ -63,13 +71,13 @@ region = Rect2(142, 1, 64, 76)
 atlas = ExtResource("1_kofeu")
 region = Rect2(206, 1, 64, 76)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_kyqh8"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbge0"]
 atlas = ExtResource("1_kofeu")
-region = Rect2(15, 554, 63, 88)
+region = Rect2(176, 640, 15, 15)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_n2lru"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tivg6"]
 atlas = ExtResource("1_kofeu")
-region = Rect2(93, 554, 67, 88)
+region = Rect2(161, 640, 15, 15)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xus4e"]
 atlas = ExtResource("1_kofeu")
@@ -89,6 +97,29 @@ region = Rect2(259, 634, 41, 76)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_70fya"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kyqh8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2lru")
+}],
+"loop": false,
+"name": &"attack_2",
+"speed": 0.5
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kofeu")
@@ -143,8 +174,19 @@ animations = [{
 "texture": SubResource("AtlasTexture_nkxek")
 }],
 "loop": true,
-"name": &"idle_down",
+"name": &"idle",
 "speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbge0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tivg6")
+}],
+"loop": true,
+"name": &"shuriken",
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -273,10 +315,10 @@ script = ExtResource("1_y4shp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_01fwt")
 sprite_frames = SubResource("SpriteFrames_70fya")
-animation = &"summon"
-autoplay = "idle_down"
-frame = 3
-frame_progress = 1.0
+animation = &"attack_2"
+autoplay = "idle"
+frame = 2
+frame_progress = 0.9781025
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

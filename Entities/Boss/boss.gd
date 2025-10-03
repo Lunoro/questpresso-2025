@@ -10,6 +10,7 @@ extends "res://Scripts/entities.gd"
 
 var player_position:Vector2
 
+
 func _ready() -> void:
 	health = 300
 	armor = 5
@@ -17,11 +18,17 @@ func _ready() -> void:
 	AnimatedSprite = $AnimatedSprite2D
 
 func _physics_process(delta: float) -> void:
+	if(is_dead):
+		return
+
 	position_check()
 	player_position = player.global_position
 	
+	#Debug ist auf L gelegt, probier ruhig mal die attacken
 	if(Input.is_action_just_pressed("Debug")):
-		summon_enemy_attack()
+		shuriken_circle_attack()
+		#attack(0, 0, 0)
+		#summon_enemy_attack()
 	
 func position_check():
 	if (player_position.y < global_position.y):
@@ -42,6 +49,17 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	$Summon1.play("default")
 	$Summon2.play("default")
 	
+# override because of unique moveset
+func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> void:
+	var random = randi_range(0, 1)
+	var direction_of_anim: Dictionary[int, String] = {
+		0: "left",
+		1: "right"
+	}
+	
+	var animation_name = "attack_" + direction_of_anim[random]
+	$AnimatedSprite2D.play(animation_name)
+	
 func summon_enemy_attack():
 	$AnimatedSprite2D.play("summon")
 	$Summon1.play("summon")
@@ -51,10 +69,24 @@ func summon_enemy_attack():
 	await $AnimatedSprite2D.animation_finished
 
 func spawn_enemy(position_to_boss: Vector2):
-	if enemy_scene:  # extra safety
+	if enemy_scene:
 		var enemy = enemy_scene.instantiate()
 		enemy.position = position + Vector2(position_to_boss)
 		get_tree().current_scene.add_child(enemy)
 	else:
 		push_error("Enemy scene not set!")
+		
+func shuriken_circle_attack():
+	var num_shuriken = 10
+	var radius = 30
 	
+	for i in num_shuriken:
+		var angle = (TAU / num_shuriken) * i
+		var shuriken = preload("res://Entities/Boss/shuriken.tscn").instantiate()
+		
+		shuriken.global_position = global_position + Vector2(cos(angle), sin(angle)) * radius
+		
+		shuriken.direction = Vector2(cos(angle), sin(angle)).normalized()
+		shuriken.speed = 100
+		
+		get_tree().current_scene.add_child(shuriken)

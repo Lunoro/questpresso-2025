@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6jdm10dtbisf"]
+
+[ext_resource type="Script" uid="uid://cqmoshlvd80vs" path="res://Entities/Boss/shuriken.gd" id="1_c5bur"]
+[ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="2_l0hen"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbge0"]
+atlas = ExtResource("2_l0hen")
+region = Rect2(176, 640, 15, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tivg6"]
+atlas = ExtResource("2_l0hen")
+region = Rect2(161, 640, 15, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mrsg3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbge0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tivg6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c5bur"]
+radius = 4.0
+
+[node name="Shuriken" type="Area2D"]
+script = ExtResource("1_c5bur")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mrsg3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_c5bur")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
