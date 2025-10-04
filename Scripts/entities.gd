@@ -123,14 +123,19 @@ func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> v
 	is_attacking = false
 	attack_cooldown_node.start(attack_cooldown_base * attack_cooldown_multiplier) #für attack_cooldown sekunden warten
 
-func no_clipping_collisionShape2D(object1 : CharacterBody2D, object2 : CharacterBody2D): #nur Kreise, hat collision shape der entities ersetzt
+#TODO: überarbeiten, velocity vielleicht mit einbeziehen
+func no_clipping_collisionShape2D(object1 : CharacterBody2D, object2 : CharacterBody2D, object2_is_static: bool): #nur Kreise, hat collision shape der entities ersetzt; object2_is_static: wenn war, wird nur object1 zurückgepusht
 	var pos1 : Vector2 = object1.position
 	var pos2 : Vector2 = object2.position
-	var min_distance : float = 0.5*(object1.collision_shape_diameter + object2.collision_shape_diameter) + 1 #0.1 als kleine Lücke
-	print(pos1.distance_to(pos2))
+	var min_distance : float = 0.5*(object1.collision_shape_diameter + object2.collision_shape_diameter)  #0.1 als kleine Lücke
+	#print(pos1.distance_to(pos2))
 	if pos1.distance_to(pos2) < min_distance: 
 		var difference : float = min_distance - pos1.distance_to(pos2)
 		var shift : Vector2 = 0.5 * difference * (pos1 - pos2).normalized()
-		object1.position += shift
-		object2.position -= shift
+		
+		if object2_is_static: 
+			object1.position += shift
+		else: 
+			object1.position += shift
+			object2.position -= shift
 		#print(str(Time.get_ticks_usec()) + ": Test    " + str(pos1.distance_to(pos2)))

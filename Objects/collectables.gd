@@ -29,6 +29,10 @@ func _process(delta: float) -> void:
 			player.attack_cooldown_multiplier = parameter[0]
 			$Timer_Haste.start(parameter[1])
 			$AnimatedSprite2D.hide()
+		
+		#if type == "armor"
+		#if type == "knockback"
+		#if type == "knockback_resistance"
 			
 	if type == "heal": 
 		$AnimatedSprite2D.play("heal")

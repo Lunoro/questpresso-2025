@@ -36,10 +36,10 @@ func _physics_process(delta: float) -> void:
 	find_path()
 	move_extra()
 	if global_position.distance_to(target.global_position) < 40: # if Abfrage nur um Rechenleistung zu sparen -> geht nur wenn, die Collisionshapes es überhaupt zu lassen, dass entities sich sonahe kommen
-		no_clipping_collisionShape2D(target, self)
+		no_clipping_collisionShape2D(target, self, false)
 	if collide: 
 		for i in in_collision_area:
-			no_clipping_collisionShape2D(i, self )
+			no_clipping_collisionShape2D(i, self, false)
 	move_and_slide()
 
 func _on_update_path_timeout() -> void:
@@ -117,7 +117,7 @@ func _on_update_aggro_timeout() -> void:
 
 func _on_enemy_marker_area_entered(area: Area2D) -> void:
 	if area.name.contains("enemy_marker") && in_collision_area.find(area.get_parent()) == -1: # && area.get_parent().name == "enemy":
-		print("Nun ist es also soweit..." + str(area.get_parent()) + "    sagte: " + str(self))
+		#print("Nun ist es also soweit..." + str(area.get_parent()) + "    sagte: " + str(self))
 		in_collision_area.append(area.get_parent())
 		#no_clipping_collisionShape2D(area.get_parent(), self )
 		collide = true

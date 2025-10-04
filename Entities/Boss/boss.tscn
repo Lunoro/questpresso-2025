@@ -246,10 +246,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_np8sd"]
-radius = 18.0
-height = 36.0
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y4shp"]
 radius = 11.998522
 height = 43.994576
@@ -326,6 +322,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_np8sd"]
+radius = 18.0
+height = 36.0
+
 [node name="Boss" type="CharacterBody2D"]
 script = ExtResource("1_y4shp")
 
@@ -334,10 +334,6 @@ material = SubResource("ShaderMaterial_01fwt")
 sprite_frames = SubResource("SpriteFrames_70fya")
 animation = &"none"
 autoplay = "none"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
-shape = SubResource("CapsuleShape2D_np8sd")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 20.0
@@ -366,7 +362,15 @@ sprite_frames = SubResource("SpriteFrames_7tu1h")
 wait_time = 3.0
 one_shot = true
 
+[node name="boss_marker" type="Area2D" parent="."]
+
+[node name="marker" type="CollisionShape2D" parent="boss_marker"]
+position = Vector2(0, -4)
+shape = SubResource("CapsuleShape2D_np8sd")
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
 [connection signal="timeout" from="Entrance" to="." method="_on_entrance_timeout"]
+[connection signal="area_entered" from="boss_marker" to="." method="_on_boss_marker_area_entered"]
+[connection signal="area_exited" from="boss_marker" to="." method="_on_boss_marker_area_exited"]

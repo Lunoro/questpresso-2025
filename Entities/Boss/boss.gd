@@ -19,6 +19,7 @@ func _ready() -> void:
 	armor = 1
 	attack_cooldown_node = $attack_cooldown
 	AnimatedSprite = $AnimatedSprite2D
+	collision_shape_diameter = 35
 	
 	await $AnimatedSprite2D.animation_finished
 	fight()
@@ -36,6 +37,9 @@ func _physics_process(delta: float) -> void:
 		shuriken_circle_attack()
 		#attack(0, 0, 0)
 		#summon_enemy_attack()
+	if collide: 
+		for i in in_collision_area:
+			no_clipping_collisionShape2D(i, self, true)
 	
 func fight():
 	if ((health / max_health) < 0.5):
@@ -136,3 +140,16 @@ func shuriken_circle_attack():
 	
 func _on_entrance_timeout() -> void:
 	spawn()
+
+func _on_boss_marker_area_entered(area: Area2D) -> void:
+	if  (area.name.contains("enemy_marker") || area.name.contains("player_marker") ) && in_collision_area.find(area.get_parent()) == -1: # && area.get_parent().name == "enemy":
+		#print("Nun ist es also soweit..." + str(area.get_parent()) + "    sagte: " + str(self))
+		in_collision_area.append(area.get_parent())
+		#no_clipping_collisionShape2D(area.get_parent(), self )
+		collide = true
+
+func _on_boss_marker_area_exited(area: Area2D) -> void:
+	if (area.name.contains("enemy_marker") || area.name.contains("player_marker") ) && in_collision_area.find(area.get_parent()) != -1:
+		in_collision_area.erase(area.get_parent())
+	if in_collision_area.is_empty(): 
+		collide = false
