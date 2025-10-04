@@ -8,16 +8,20 @@ var is_triggered = false
 var in_sight = false
 var is_fighting
 
+var type : String = "standard"
+var spawn_parameters : Array = [] #[[variable_name, value]]
+
 func _ready() -> void:
 	init()
-	speed_base = 50
-	health = 10
-	armor = 3
-	attack_cooldown_node = $attack_cooldown #setzt Timer node
-	attack_cooldown_base = 2
-	knockback_base = 200
-	AnimatedSprite = $AnimatedSprite2D
-	max_health = 10
+	if type == "standard": 
+		speed_base = 50
+		health = 10
+		armor = 3
+		attack_cooldown_node = $attack_cooldown #setzt Timer node
+		attack_cooldown_base = 2
+		knockback_base = 200
+		AnimatedSprite = $AnimatedSprite2D
+		max_health = 10
 	#attack_cooldown = 5
 	#target = %player
 	#is_dead = false
@@ -28,9 +32,30 @@ func _ready() -> void:
 	#attack_allowed = true
 	#in_melee
 	collision_shape_diameter = 20
+	if not spawn_parameters.is_empty(): 
+		for i in spawn_parameters: 
+			set(i[0],i[1])
+
 
 func _physics_process(delta: float) -> void:
-	if(is_dead): return
+	if(is_dead): 
+		#drops!
+		var t = ["heal_full"].pick_random()
+		var dict = {
+			"heal_small" :			["heal", [5]],
+			"heal_full" : 			["heal", [-1]],
+			"speed" : 				["speed", [2,20]], #speedmulti, duration
+			"haste": 				["haste", [0.01,10]], #changes attack_cooldown [how fast (NIE 0), duration] -> for 0 < fastness < 1 faster; above 1 slower
+			"armor": 				["armor", [3,10]], 
+			"knockback": 			["knockback", [10,10]],
+			"knockback_resistance": ["knockback_resistance", [0.2,10]],
+			"regeneration": 		["regeneration", [1,10]]
+		}
+		print(str(dict[t][0]) + "      " + str(dict[t][1]) )
+		lib.spawn_collectible(position, dict[t][0], dict[t][1])
+		queue_free()
+		return
+	regenerate(regeneration)
 	update_animation()
 	update_fov()
 	find_path()

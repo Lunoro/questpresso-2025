@@ -6,19 +6,25 @@ extends Node
 var placeholder : Object
 var collectibles : PackedScene = load("res://Objects/collectables.tscn")
 var enemies : PackedScene = load("res://Entities/Enemy.tscn")
+var enemy_instance_id = 0
 
 var collectibles_instances = [
 #	[Pointer Klon, Position beim Erstellen, Typ, Parameter]
 	[placeholder, Vector2(50,150), "heal", -1], #-1 ist complete heal, alles andere nur amount
 	[placeholder , Vector2(100,150), "speed", [2,20]], #speedmulti, duration
 	[placeholder, Vector2(-50,150), "heal", 5],
-	[placeholder, Vector2(-100,150), "haste", [0.01,10]] #changes attack_cooldown [how fast (NIE 0), duration] -> for 0 < fastness < 1 faster; above 1 slower
+	[placeholder, Vector2(-100,150), "haste", [0.01,10]], #changes attack_cooldown [how fast (NIE 0), duration] -> for 0 < fastness < 1 faster; above 1 slower
+	[placeholder, Vector2(-150,150), "armor", [3,10]], 
+	[placeholder, Vector2(-200,150), "knockback", [10,10]],
+	[placeholder, Vector2(-250,150), "knockback_resistance", [0.2,10]],
+	[placeholder, Vector2(-300,150), "regeneration", [1,10]]
+	
 ]
 
-var enemy_location = [
-	Vector2(-100, -50), 
-	Vector2(100, -100)
-	]
+#var enemy_location = [
+	#Vector2(-100, -50), 
+	#Vector2(100, -100)
+	#]
 
 @onready var player_node: Node = get_node(player_path)
 
@@ -28,29 +34,59 @@ func _ready() -> void:
 		add_child(dup)
 		clone[0] = get_node(dup.get_path())
 		clone[0].position = clone[1]
+		clone[0].posy = clone[1][1]
 		clone[0].type = clone[2]
 		clone[0].parameter = clone[3]
-		 
-	for e in range(enemy_location.size()): 
-		var parent_of_player = player_node.get_parent()
-		if parent_of_player == null: print("Alarm")
-		var enemy = enemies.instantiate()
-		enemy.name = str(enemy) + str(e)
-		player_node.add_sibling.call_deferred(enemy)
-		enemy.position = enemy_location[e]
-		#get_node(%player.get_path()).add_sibling.call_deferred(enemy)
-		#print( str(enemy.get_path()) + "     " + str(enemy.get_parent()) + "     " + enemy.name + "     " + str(%player.get_parent()) + "     " + str(get_node(%player.get_path()) ))
-		#enemy = get_node(enemy.get_path())
+		clone[0].offset = randf()
+		
+	#for e in range(enemy_location.size()): 
+		#var parent_of_player = player_node.get_parent()
+		#if parent_of_player == null: print("Alarm")
+		#var enemy = enemies.instantiate()
+		#enemy.name = str(enemy) + str(e)
+		#player_node.add_sibling.call_deferred(enemy)
 		#enemy.position = enemy_location[e]
+		##get_node(%player.get_path()).add_sibling.call_deferred(enemy)
+		##print( str(enemy.get_path()) + "     " + str(enemy.get_parent()) + "     " + enemy.name + "     " + str(%player.get_parent()) + "     " + str(get_node(%player.get_path()) ))
+		##enemy = get_node(enemy.get_path())
+		##enemy.position = enemy_location[e]
+	
+	spawn_enemy(Vector2(-100,-50),Direction.DOWN,"standard",[["health", 2], ["max_health", 2]])
+	spawn_enemy(Vector2(100,50),Direction.LEFT,"standard",[])
 
 
 func _process(delta: float) -> void:
 	z_indexing()
 
+enum Direction {LEFT, RIGHT, UP, DOWN}
+func spawn_enemy(pos : Vector2, direction : Direction, type : String, spawn_parameters : Array) :
+	#parameters sind optional, wenn man vom Typ abweichende Werte wie health, speed, knockback, knockback_resistance... setzen möchte
+	if player_node.get_parent() == null: print("Alarm") #DEBUG
+	var enemy : CharacterBody2D = enemies.instantiate()
+	player_node.add_sibling.call_deferred(enemy)
+	enemy_instance_id += 1
+	enemy.name = str(enemy) + str(enemy_instance_id)
+	enemy.position = pos
+	enemy.direction = Direction.DOWN
+	enemy.type = type
+	enemy.spawn_parameters = spawn_parameters
 
+func spawn_collectible(pos : Vector2, type : String, spawn_parameters : Array) : #nur eine Methode verwenden, onready raushauen
+	var dup = collectibles.instantiate()
+	#nicht direkt einsammelbar!
+	$".".add_child(dup)
+	#adup = get_node(dup.get_path())
+	dup.position = pos
+	print("collectible spawned    " + str(dup.position) )
+	dup.posy = pos.y
+	dup.type = type
+	dup.parameter = spawn_parameters
+	dup.offset = randf()
+
+# z indexing
 func z_indexing() -> void: 
 	var characters : Array = []
-	for child in get_parent().get_children():
+	for child in get_children():
 		if child is CharacterBody2D:
 			characters.append([child, child.position.y])
 	characters.sort_custom(sort_ascending)
@@ -69,7 +105,8 @@ func sort_ascending(a, b): #Für custom sorting
 #func z_indexing() -> void: 
 	#var zlist : Array = get_parent().get_children()
 	#var n = 0
-	#for i in range(zlist.size()): #alle nicht sichtbaren dinge, deren z index angepasst werden muss, löschen
+	# var zlist_size = zlist.size()
+	#for i in range(zlist_size): #alle nicht sichtbaren dinge, deren z index angepasst werden muss, löschen
 		#if zlist[n].get_class() != "CharacterBody2D":
 			#zlist.pop_at(n)
 			#n -= 1

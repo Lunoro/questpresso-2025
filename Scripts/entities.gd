@@ -1,4 +1,6 @@
-extends CharacterBody2D
+extends CharacterBody2D 
+
+@onready var lib = preload("res://Scenes/game_manager.gd").new()
 
 enum Direction {LEFT, RIGHT, UP, DOWN}
 var direction : Direction = Direction.DOWN
@@ -16,13 +18,16 @@ var armor_class = { # wird mit Damage multipliziert
 
 var health = 10
 var max_health = 10
+var regeneration = 0
 var is_dead = false
 var armor = 0
+var armor_bonus = 0
 var attack_cooldown_base = 1
 var attack_cooldown_multiplier = 1
 var knockback_base # wie stark das Knockback der Entität bei Attacke ist, nicht wie stark sie selbst zurückgestoßen wird
 var knockback_multiplier = 1
 var knockback_resistance = 0
+var knockback_resistance_multiplier = 1
 var is_moving = false
 var is_attacking = false
 var attack_allowed = true #es gibt einen cooldown nach jedem Schlag
@@ -39,12 +44,17 @@ var collision_shape_diameter = 20
 var speed_base = 125
 var speed_multiplier = 1
 
+var drops : Array = []
+
 func init():
 	target = get_tree().get_first_node_in_group("player")
 	print("Target is: ", target)
 
 func damage_taken(amount):
-	health -= amount * armor_class[armor]
+	if armor + armor_bonus <= 5: 
+		health -= amount * armor_class[armor+armor_bonus]
+	else: 
+		health -= amount * armor_class[5]
 	if health <= 0 && is_dead == false:
 		is_attacking = false
 		is_dead = true
@@ -55,7 +65,7 @@ func damage_taken(amount):
 #TODO smooth machen
 func knockback(amount:float, source:Vector2, knockback_target):
 	var knockback_direction : Vector2 = Vector2((knockback_target.global_position.x - source.x), (knockback_target.global_position.y - source.y)).normalized()
-	knockback_direction = knockback_direction * amount*(1-knockback_target.knockback_resistance)
+	knockback_direction = knockback_direction * amount*(1-knockback_target.knockback_resistance)*knockback_resistance_multiplier # knockback_resistance_multiplier soll kleiner 1 sein, damit sinn ergibt
 	knockback_target.move_extra_input = knockback_direction
 
 func move_extra():
@@ -118,10 +128,16 @@ func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> v
 	for i in in_melee:
 		if typeof(i) == 24 && i != self: # wenn in_melee vom Typ object ist --> falls in_melee das objekt player ist, ist es insgesamt das selbe wie %player
 			i.damage_taken(damage) #dem objekt, dass sich in melee hitbox aufhält, Schaden machen
-			knockback(knockback_amount,position,i)
+			knockback(knockback_amount * knockback_multiplier,position,i)
 	await AnimatedSprite.animation_finished
 	is_attacking = false
 	attack_cooldown_node.start(attack_cooldown_base * attack_cooldown_multiplier) #für attack_cooldown sekunden warten
+
+func regenerate(regeneration): 
+	health += regeneration * get_process_delta_time()
+	if health > max_health-0.1: 
+		health = max_health
+	#print(regeneration * get_process_delta_time())
 
 #TODO: überarbeiten, velocity vielleicht mit einbeziehen
 func no_clipping_collisionShape2D(object1 : CharacterBody2D, object2 : CharacterBody2D, object2_is_static: bool): #nur Kreise, hat collision shape der entities ersetzt; object2_is_static: wenn war, wird nur object1 zurückgepusht

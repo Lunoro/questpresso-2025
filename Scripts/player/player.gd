@@ -7,7 +7,7 @@ func _ready() -> void:
 	speed_base = 125
 	max_health = 20
 	health = 20
-	armor = 3
+	armor = 1
 	attack_cooldown_node = $attack_cooldown #setzt Timer node, bei enemy und player grad gleich benannt, bei Problemen umbenennen
 	attack_cooldown_base = 1
 	knockback_base = 100
@@ -36,6 +36,7 @@ func _physics_process(delta):
 	if is_dead: 
 		return
 	if (!is_interacting):
+		regenerate(regeneration)
 		get_input()
 		move_extra()
 		move_and_slide()

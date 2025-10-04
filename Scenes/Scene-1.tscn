@@ -65,8 +65,10 @@ outlines = Array[PackedVector2Array]([PackedVector2Array(-232, -126, -230, 130, 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ki1wc"]
 shader = ExtResource("2_ivdeq")
 
-[node name="Node2D" type="Node2D"]
+[node name="game" type="Node2D"]
 material = SubResource("ShaderMaterial_ivdeq")
+script = ExtResource("8_ivdeq")
+player_path = NodePath("player")
 
 [node name="npc" parent="." instance=ExtResource("3_c6o2m")]
 material = SubResource("ShaderMaterial_gnb0f")
@@ -101,7 +103,5 @@ material = SubResource("ShaderMaterial_ki1wc")
 position = Vector2(113, -70)
 
 [node name="game_manager" type="Node" parent="."]
-script = ExtResource("8_ivdeq")
-player_path = NodePath("../player")
 
 [connection signal="child_entered_tree" from="player/Camera2D" to="game_manager" method="_on_camera_2d_child_entered_tree"]
