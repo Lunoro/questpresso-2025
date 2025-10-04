@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://d0b424myd7i3u"]
+[gd_scene load_steps=130 format=3 uid="uid://d0b424myd7i3u"]
 
 [ext_resource type="Script" uid="uid://dnlss3gbhjecj" path="res://Scripts/player/player.gd" id="1_2qdoy"]
 [ext_resource type="Texture2D" uid="uid://1ofxnn85cbyi" path="res://Assets/RPG_Hero/idle/idle_down_40x40.png" id="2_cxr5p"]
@@ -842,9 +842,12 @@ radius = 7.071068
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2qdoy"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a0vkg"]
+height = 22.0
+
 [node name="Player" type="CharacterBody2D"]
-collision_layer = 3
-collision_mask = 3
+collision_layer = 8
+collision_mask = 8
 script = ExtResource("1_2qdoy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -885,6 +888,9 @@ wait_time = 2.0
 
 [node name="health_bar" parent="." instance=ExtResource("19_a0vkg")]
 position = Vector2(0, -19)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_a0vkg")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AnimatedSprite2D/SwordHit" to="." method="_on_melee_hit_body_entered"]
