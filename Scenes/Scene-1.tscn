@@ -1,17 +1,13 @@
-[gd_scene load_steps=15 format=4 uid="uid://ci2q6fuq8rkrk"]
+[gd_scene load_steps=13 format=4 uid="uid://ci2q6fuq8rkrk"]
 
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player.tscn" id="1_y34fs"]
 [ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_ivdeq"]
-[ext_resource type="PackedScene" uid="uid://cnwlpg303kk11" path="res://Entities/NPC.tscn" id="3_c6o2m"]
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="6_4h54k"]
 [ext_resource type="PackedScene" uid="uid://c8q66clyp2per" path="res://Entities/Boss/boss.tscn" id="6_c2ibx"]
 [ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/UI/ui.tscn" id="6_ypsnf"]
 [ext_resource type="Script" uid="uid://cg0r4am3nnpxj" path="res://Scenes/game_manager.gd" id="8_ivdeq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ivdeq"]
-shader = ExtResource("2_ivdeq")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gnb0f"]
 shader = ExtResource("2_ivdeq")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c2ibx"]
@@ -49,12 +45,13 @@ texture = ExtResource("6_4h54k")
 3:3/0 = 0
 4:3/0 = 0
 5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:3/0 = 0
 7:3/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_30g14"]
-physics_layer_0/collision_layer = 3
-physics_layer_0/collision_mask = 3
+physics_layer_0/collision_layer = 28
+physics_layer_0/collision_mask = 28
 sources/1 = SubResource("TileSetAtlasSource_vdid1")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pv4y8"]
@@ -69,10 +66,6 @@ shader = ExtResource("2_ivdeq")
 material = SubResource("ShaderMaterial_ivdeq")
 script = ExtResource("8_ivdeq")
 player_path = NodePath("player")
-
-[node name="npc" parent="." instance=ExtResource("3_c6o2m")]
-material = SubResource("ShaderMaterial_gnb0f")
-position = Vector2(169, -24)
 
 [node name="player" parent="." groups=["player"] instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
