@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=4 uid="uid://b3jk2o3q35j1g"]
+[gd_scene load_steps=22 format=4 uid="uid://b3jk2o3q35j1g"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_tam42"]
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player/Player.tscn" id="3_b456k"]
 [ext_resource type="PackedScene" uid="uid://c8q66clyp2per" path="res://Entities/Boss/boss.tscn" id="4_rgam5"]
+[ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/UI/ui.tscn" id="5_de2w7"]
 [ext_resource type="AudioStream" uid="uid://bk5ilh4j2spnb" path="res://Music/questpresso_boss.mp3" id="6_naobg"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_5surw"]
@@ -231,3 +232,6 @@ stream = ExtResource("6_naobg")
 volume_db = -20.0
 autoplay = true
 parameters/looping = true
+
+[node name="ui" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_de2w7")]
+player = NodePath("../player")

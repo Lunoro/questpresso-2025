@@ -8,5 +8,6 @@ extends Area2D
 	
 
 func _on_body_entered(body: Node2D) -> void:
-	if(body.name == "Player"):
+	print("body entered")
+	if(body.name == "player"):
 		body.global_position = teleport_point.global_position

@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-
 @export var player: CharacterBody2D
 var text : String
 
@@ -8,7 +7,6 @@ func _ready() -> void:
 	$deathscreen.hide()
 	$retry.hide()
 	$win.hide()
-
 
 func _process(delta: float) -> void:
 	if player.is_dead == true: 
