@@ -1,7 +1,7 @@
 [gd_scene load_steps=41 format=3 uid="uid://bh365u5asy64d"]
 
 [ext_resource type="Script" uid="uid://ci23ylwu5eaaj" path="res://Objects/collectibles.gd" id="1_0fsfb"]
-[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_frybr"]
+[ext_resource type="Shader" uid="uid://d30yvrvokljqs" path="res://Scripts/bw_shader_potions.tres" id="2_0fsfb"]
 [ext_resource type="Texture2D" uid="uid://c61wg5ycwdyij" path="res://Assets/PotionSheet_NOXIT.png" id="3_k3pwr"]
 [ext_resource type="Texture2D" uid="uid://b8xivvfn1bmah" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion1.png" id="4_ubueb"]
 [ext_resource type="Texture2D" uid="uid://bxo6rq3gn13mo" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion2.png" id="5_af7v7"]
@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dfmehlw5q00sq" path="res://Assets/DoomlandKit/DoomlandKit/Single-Items/WidePotion-outline4.png" id="11_k3lg7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h3m33"]
-shader = ExtResource("2_frybr")
+shader = ExtResource("2_0fsfb")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8l05d"]
 atlas = ExtResource("3_k3pwr")
@@ -356,7 +356,7 @@ script = ExtResource("1_0fsfb")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_h3m33")
 sprite_frames = SubResource("SpriteFrames_jpjvu")
-animation = &"speed"
+animation = &"knockback_resistance"
 
 [node name="Timer_Speed" type="Timer" parent="."]
 

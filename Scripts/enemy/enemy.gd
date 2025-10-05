@@ -11,17 +11,20 @@ var is_fighting
 var type : String = "standard"
 var spawn_parameters : Array = [] #[[variable_name, value]]
 
+var loot : String = "random"
+
 func _ready() -> void:
 	init()
 	if type == "standard": 
 		speed_base = 50
 		health = 10
-		armor = 3
+		armor = 2
 		attack_cooldown_node = $attack_cooldown #setzt Timer node
 		attack_cooldown_base = 2
-		knockback_base = 200
+		knockback_base = 150
 		AnimatedSprite = $AnimatedSprite2D
 		max_health = 10
+		loot = "random"
 	#attack_cooldown = 5
 	#target = %player
 	#is_dead = false
@@ -144,25 +147,33 @@ func _on_enemy_marker_area_exited(area: Area2D) -> void:
 		collide = false
 
 func _on_death_timer_timeout() -> void:
+	if loot == "nothing": 
+		queue_free()
 	#drops!
-	var t = [
-		"heal_small", 
-		"heal_full", 
-		"speed", 
-		"haste", 
-		"armor",
-		"knockback", 
-		"knockback_resistance",
-		"regeneration"
-	].pick_random()
+	var t
+	if loot == "random":
+		t = [
+			"heal_small", 
+			"heal_full", 
+			"speed", 
+			"haste", 
+			"armor2",
+			"armor4",
+			"knockback", 
+			"knockback_resistance",
+			"regeneration"
+		].pick_random()
+	else: 
+		t = loot
 	
 	var dict = {
 		"heal_small" :			["heal", [5]],
 		"heal_full" : 			["heal", [-1]],
 		"speed" : 				["speed", [1.5,20]], #speedmulti, duration
 		"haste": 				["haste", [0.1,10]], #changes attack_cooldown [how fast (NIE 0), duration] -> for 0 < fastness < 1 faster; above 1 slower
-		"armor": 				["armor", [3,10]], 
-		"knockback": 			["knockback", [5,10]], #knockback_multiplier = 5; duration 10 s
+		"armor2": 				["armor", [2,20]], #bei armor 1 nur hälfte Schaden
+		"armor4": 				["armor", [4,10]], #bei armor 1 nur drittel Schaden
+		"knockback": 			["knockback", [2.5,10]], #knockback_multiplier = 5; duration 10 s
 		"knockback_resistance": ["knockback_resistance", [0.2,10]], #kncokback_resistance -> zwischen 0 und 1 wirds besser
 		"regeneration": 		["regeneration", [1,10]]
 	}

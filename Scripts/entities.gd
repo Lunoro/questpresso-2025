@@ -7,14 +7,15 @@ var direction : Direction = Direction.DOWN
 var target
 var AnimatedSprite : AnimatedSprite2D
 
-var armor_class = { # wird mit Damage multipliziert
-	0: 1.0,
-	1: 0.8,
-	2: 0.5,
-	3: 0.25,
-	4: 0.1,
-	5: 0.05
-}
+#var armor_class = { # wird mit Damage multipliziert, immer 20% weniger
+	#0: 1.0,
+	#1: 0.8,
+	#2: 0.64,
+	#3: 0.512,
+	#4: 0.4096,
+	#5: 0.32768,
+	#6: 0.262144
+#}
 
 var health = 10
 var max_health = 10
@@ -52,10 +53,10 @@ func init():
 	print("Target is: ", target)
 
 func damage_taken(amount):
-	if armor + armor_bonus <= 5: 
-		health -= amount * armor_class[armor+armor_bonus]
+	if armor + armor_bonus <= 12: 
+		health -= amount * pow(0.8, (armor + armor_bonus))  #immer 20% weniger pro armor
 	else: 
-		health -= amount * armor_class[5]
+		health -= amount * 0.05 # 0.8^13 ist ungefähr 0.05
 	if health <= 0 && is_dead == false:
 		is_attacking = false
 		is_dead = true
@@ -79,7 +80,8 @@ func move_extra():
 	velocity += move_extra_buffer
 
 func update_animation():
-	if typeof(AnimatedSprite) == 0 || is_attacking == true: return #update_animation nicht ausführen, wenn es kein Objekt gibt, was das kann, denn sonst Fehler; wenn is_attacking true ist, wird Animation schon von attack() gehandelt
+	if typeof(AnimatedSprite) == 0 || is_attacking == true: 
+		return #update_animation nicht ausführen, wenn es kein Objekt gibt, was das kann, denn sonst Fehler; wenn is_attacking true ist, wird Animation schon von attack() gehandelt
 	var animation_name = "idle_" + Direction.keys()[direction].to_lower()
 	if(is_moving):
 		animation_name = "move_" + Direction.keys()[direction].to_lower()
@@ -88,6 +90,7 @@ func update_animation():
 		#animation_name = "attack_" + Direction.keys()[direction].to_lower()
 	if(is_dead):
 		animation_name = "die_" + Direction.keys()[direction].to_lower()
+	AnimatedSprite.speed_scale = 1
 	AnimatedSprite.play(animation_name)
 	await AnimatedSprite.animation_finished
 

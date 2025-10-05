@@ -51,8 +51,8 @@ func _ready() -> void:
 		##print( str(enemy.get_path()) + "     " + str(enemy.get_parent()) + "     " + enemy.name + "     " + str(%player.get_parent()) + "     " + str(get_node(%player.get_path()) ))
 		##enemy = get_node(enemy.get_path())
 		##enemy.position = enemy_location[e]
-	spawn_enemy(Vector2(-100,-50),Direction.DOWN,"standard",[["health", 2], ["max_health", 2]])
-	spawn_enemy(Vector2(100,50),Direction.LEFT,"standard",[])
+	spawn_enemy(Vector2(-100,-50),Direction.DOWN,"standard",[["health", 20], ["max_health", 20]])
+	spawn_enemy(Vector2(100,50),Direction.LEFT,"standard", [["knockback_base", 250]] ) #doppelte [[]] sind wichtig,sonst crash
 
 
 func _process(delta: float) -> void:
