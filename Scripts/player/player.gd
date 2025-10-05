@@ -10,7 +10,7 @@ func _ready() -> void:
 	speed_base = 125
 	max_health = 20
 	health = 20
-	armor = 1
+	armor = 0
 	attack_cooldown_node = $attack_cooldown #setzt Timer node, bei enemy und player grad gleich benannt, bei Problemen umbenennen
 	attack_cooldown_base = 1
 	knockback_base = 100
@@ -37,6 +37,7 @@ func get_input():
 	
 func _physics_process(delta):
 	if is_dead: 
+		await $AnimatedSprite2D.animation_finished
 		return
 	if (!is_interacting):
 		regenerate(regeneration)

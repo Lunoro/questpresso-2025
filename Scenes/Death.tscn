@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://peiila34wh3h"]
+
+[ext_resource type="PackedScene" uid="uid://bqt8wbibax40h" path="res://Scenes/Start.tscn" id="1_e3uyu"]
+
+[node name="Death" type="Node2D"]
+
+[node name="Start" parent="." instance=ExtResource("1_e3uyu")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -165.0
+offset_top = -236.0
+offset_right = 168.0
+offset_bottom = -148.0
+text = "You died... unfortunately
+
+Maybe try again? :3"
+horizontal_alignment = 1

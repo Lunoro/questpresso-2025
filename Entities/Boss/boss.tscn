@@ -1,8 +1,9 @@
-[gd_scene load_steps=41 format=3 uid="uid://c8q66clyp2per"]
+[gd_scene load_steps=42 format=3 uid="uid://c8q66clyp2per"]
 
 [ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="1_kofeu"]
 [ext_resource type="Script" uid="uid://byd0xfl8ow4s1" path="res://Entities/Boss/boss.gd" id="1_y4shp"]
 [ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_ssfxk"]
+[ext_resource type="PackedScene" uid="uid://8gmwg0wpj41r" path="res://Entities/health_bar.tscn" id="4_01fwt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_01fwt"]
 shader = ExtResource("2_ssfxk")
@@ -376,6 +377,9 @@ shape = SubResource("CapsuleShape2D_np8sd")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("CapsuleShape2D_ssfxk")
+
+[node name="health_bar" parent="." instance=ExtResource("4_01fwt")]
+position = Vector2(0, -38)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

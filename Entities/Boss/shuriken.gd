@@ -15,8 +15,7 @@ func _on_timer_timeout() -> void:
 	print("freed shuriken")
 	$Timer.stop()
 
-
 func _on_area_entered(area: Area2D) -> void:
 	if(area.is_in_group("hitbox") && area.owner.name == "player"):
 		var player = area.owner
-		player.damage_taken(10)
+		player.damage_taken(5)
