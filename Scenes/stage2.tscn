@@ -216,7 +216,7 @@ position_smoothing_enabled = true
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 
-[node name="Boss" parent="." instance=ExtResource("4_rgam5")]
+[node name="Boss" parent="." groups=["boss"] instance=ExtResource("4_rgam5")]
 position = Vector2(0, -72)
 
 [node name="TileMapLayer2" type="TileMapLayer" parent="."]

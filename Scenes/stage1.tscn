@@ -258,72 +258,95 @@ position = Vector2(1584, -2846)
 shape = SubResource("CircleShape2D_twg8k")
 
 [node name="Enemy" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(980, -58)
 
 [node name="Enemy2" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(974, -144)
 
 [node name="Enemy3" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(1058, -50)
 
 [node name="Enemy4" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(1280, -507)
 
 [node name="Enemy5" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(569, -16)
 
 [node name="Enemy6" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(612, -29)
 
 [node name="Enemy7" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(468, -532)
 
 [node name="Enemy8" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(68, -123)
 
 [node name="Enemy9" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(355, -103)
 
 [node name="Enemy10" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(233, -48)
 
 [node name="Enemy11" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(-198, 97)
 
 [node name="Enemy12" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(-247, 40)
 
 [node name="Enemy13" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(-440, -204)
 
 [node name="Enemy14" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(-449, -328)
 
 [node name="Enemy15" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(6, -589)
 
 [node name="Enemy16" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(662, 200)
 
 [node name="Enemy17" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(672, -314)
 
 [node name="Enemy18" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(2022, -1858)
 
 [node name="Enemy19" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(2368, -1882)
 
 [node name="Enemy20" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(1750, -2179)
 
 [node name="Enemy21" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(2460, -2530)
 
 [node name="Enemy22" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(1740, -2664)
 
 [node name="Enemy23" parent="." instance=ExtResource("5_twg8k")]
+material = null
 position = Vector2(2326, -2772)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

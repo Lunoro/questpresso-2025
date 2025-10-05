@@ -2,8 +2,10 @@ extends CanvasLayer
 
 @export var player: CharacterBody2D
 var text : String
+var boss : CharacterBody2D
 
 func _ready() -> void:
+	boss = get_tree().get_first_node_in_group("boss")
 	$deathscreen.hide()
 	$retry.hide()
 	$win.hide()
@@ -15,7 +17,7 @@ func _process(delta: float) -> void:
 		$retry.show()
 		print("'s dead")
 		return
-	if $"../Boss".is_dead: 
+	if boss != null && boss.is_dead: 
 		$Label.hide()
 		$win.show()
 		return
