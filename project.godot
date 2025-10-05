@@ -24,6 +24,7 @@ project/assembly_name="Questpresso-2025"
 hitbox=""
 interact=""
 player=""
+enemy=""
 
 [input]
 

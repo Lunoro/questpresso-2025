@@ -12,6 +12,8 @@ extends "res://Entities/entities.gd"
 @onready var player : CharacterBody2D = %player
 @export var enemy_scene: PackedScene = preload("res://Entities/Enemy/Enemy.tscn")
 
+
+var allow_fight = false
 var player_position:Vector2
 func _ready() -> void:
 	$Entrance.start()
@@ -23,9 +25,13 @@ func _ready() -> void:
 	collision_shape_diameter = 35
 	
 	await $AnimatedSprite2D.animation_finished
-	fight()
+	$boss_spawn.start(30)
+
+
 
 func _physics_process(delta: float) -> void:
+	if player.position.distance_to(position) > 1000 || allow_fight == false: 
+		return
 	if(is_dead):
 		despawn()
 		return
@@ -153,3 +159,11 @@ func _on_boss_marker_area_exited(area: Area2D) -> void:
 		in_collision_area.erase(area.get_parent())
 	if in_collision_area.is_empty(): 
 		collide = false
+
+
+func _on_boss_spawn_timeout() -> void:
+	if player.position.distance_to(position) > 800: 
+		$boss_spawn.start(3)
+	else: 
+		allow_fight = true
+		fight()

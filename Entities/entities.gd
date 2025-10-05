@@ -49,6 +49,7 @@ var speed_multiplier = 1
 var drops : Array = []
 
 func init():
+	#await get_tree().create_timer(0.1).timeout
 	target = get_tree().get_first_node_in_group("player")
 	print("Target is: ", target)
 

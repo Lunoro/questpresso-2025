@@ -1,8 +1,7 @@
-[gd_scene load_steps=19 format=4 uid="uid://b3jk2o3q35j1g"]
+[gd_scene load_steps=18 format=4 uid="uid://b3jk2o3q35j1g"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_tam42"]
 [ext_resource type="Script" uid="uid://c2msb5x6fxux" path="res://misc/area_2d2.gd" id="2_m0tip"]
-[ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player/Player.tscn" id="3_b456k"]
 [ext_resource type="PackedScene" uid="uid://c8q66clyp2per" path="res://Entities/Boss/boss.tscn" id="4_rgam5"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_5surw"]
@@ -158,16 +157,19 @@ script = ExtResource("2_m0tip")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_b456k")
 
-[node name="Player" parent="." instance=ExtResource("3_b456k")]
+<<<<<<< Updated upstream
+=======
+[node name="player" parent="." instance=ExtResource("3_b456k")]
 position = Vector2(0, 104)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 
+>>>>>>> Stashed changes
 [node name="Boss" parent="." instance=ExtResource("4_rgam5")]
 position = Vector2(0, -72)
 

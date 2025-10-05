@@ -60,17 +60,19 @@ func _process(delta: float) -> void:
 	z_indexing()
 
 enum Direction {LEFT, RIGHT, UP, DOWN}
-func spawn_enemy(pos : Vector2, direction : Direction, type : String, spawn_parameters : Array) :
+func spawn_enemy(pos : Vector2, direction : Direction, type : String, spawn_parameters : Array):#, anchor_node: Node2D) :
 	#parameters sind optional, wenn man vom Typ abweichende Werte wie health, speed, knockback, knockback_resistance... setzen möchte
-	if player_node.get_parent() == null: print("Alarm") #DEBUG
+	#if anchor_node.get_parent() == null: print("Alarm") #DEBUG
 	var enemy : CharacterBody2D = enemies.instantiate()
-	player_node.add_sibling.call_deferred(enemy)
+	#anchor_node.add_sibling.call_deferred(enemy)
 	enemy_instance_id += 1
 	enemy.name = str(enemy) + str(enemy_instance_id)
 	enemy.position = pos
 	enemy.direction = Direction.DOWN
 	enemy.type = type
 	enemy.spawn_parameters = spawn_parameters
+	print("spawned")
+	print_tree()
 
 func spawn_collectible(pos : Vector2, type : String, spawn_parameters : Array, anchor_node : Node2D) : #nur eine Methode verwenden, onready raushauen
 	#anchor_node soll player_node sein

@@ -41,6 +41,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	init()
 	if(is_dead): 
 		if die == false: 
 			die = true
@@ -83,7 +84,7 @@ func find_path(): #und start attack
 		pass #in anderen Pathfinding Algorithmus übergehen -> dodgen, umkreisen, verstecken...
 	
 	var next_position = navigation_agent.get_next_path_position()
-	var direction = (next_position - global_position).normalized()
+	var direction = (next_position - self.global_position).normalized()
 	
 	velocity = direction * speed_base * speed_multiplier
 
