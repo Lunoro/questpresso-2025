@@ -67,7 +67,7 @@ func damage_taken(amount):
 #TODO smooth machen
 func knockback(amount:float, source:Vector2, knockback_target):
 	var knockback_direction : Vector2 = Vector2((knockback_target.global_position.x - source.x), (knockback_target.global_position.y - source.y)).normalized()
-	knockback_direction = knockback_direction * amount*(1-knockback_target.knockback_resistance)*knockback_resistance_multiplier # knockback_resistance_multiplier soll kleiner 1 sein, damit sinn ergibt
+	knockback_direction = knockback_direction * amount*(1-knockback_target.knockback_resistance)* knockback_target.knockback_resistance_multiplier # knockback_resistance_multiplier soll kleiner 1 sein, damit sinn ergibt
 	knockback_target.move_extra_input = knockback_direction
 
 func move_extra():
