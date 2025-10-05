@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://c6jdm10dtbisf"]
 
 [ext_resource type="Script" uid="uid://cqmoshlvd80vs" path="res://Entities/Boss/shuriken.gd" id="1_c5bur"]
-[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_2dfoi"]
+[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/shader/bw_shader.tres" id="2_2dfoi"]
 [ext_resource type="Texture2D" uid="uid://b7glptuyaapr2" path="res://Assets/boss/Crystal Knight.png" id="2_l0hen"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fcxuv"]

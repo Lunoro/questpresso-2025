@@ -1,6 +1,6 @@
 extends CharacterBody2D 
 
-@onready var lib = preload("res://Scenes/game_manager.gd").new()
+@onready var lib = preload("res://Scripts/game_manager.gd").new()
 
 enum Direction {LEFT, RIGHT, UP, DOWN}
 var direction : Direction = Direction.DOWN

@@ -1,9 +1,9 @@
 [gd_scene load_steps=130 format=3 uid="uid://d0b424myd7i3u"]
 
-[ext_resource type="Script" uid="uid://dnlss3gbhjecj" path="res://Scripts/player/player.gd" id="1_2qdoy"]
+[ext_resource type="Script" uid="uid://dnlss3gbhjecj" path="res://Entities/Player/player.gd" id="1_2qdoy"]
 [ext_resource type="Texture2D" uid="uid://1ofxnn85cbyi" path="res://Assets/RPG_Hero/idle/idle_down_40x40.png" id="2_cxr5p"]
 [ext_resource type="Texture2D" uid="uid://c2oas2xs6mi84" path="res://Assets/RPG_Hero/attack/attack_down_40x40.png" id="2_dmq7b"]
-[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_opvli"]
+[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/shader/bw_shader.tres" id="2_opvli"]
 [ext_resource type="Texture2D" uid="uid://clwqcuaul7bfe" path="res://Assets/RPG_Hero/attack/attack_left_40x40.png" id="3_kwjl5"]
 [ext_resource type="Texture2D" uid="uid://4847o6ejngxv" path="res://Assets/RPG_Hero/idle/idle_left_40x40.png" id="3_tdg3f"]
 [ext_resource type="Texture2D" uid="uid://b3sqkj2j7jbmo" path="res://Assets/RPG_Hero/idle/idle_right_40x40.png" id="4_dtqjt"]

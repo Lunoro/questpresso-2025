@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://8gmwg0wpj41r"]
 
-[ext_resource type="Shader" uid="uid://jf1ecvffl1ev" path="res://Scripts/color_white.tres" id="1_lr8po"]
-[ext_resource type="Shader" uid="uid://dr2cbhwuxig8g" path="res://Scripts/color_gray.tres" id="2_2pjxo"]
+[ext_resource type="Shader" uid="uid://jf1ecvffl1ev" path="res://Scripts/shader/color_white.tres" id="1_lr8po"]
+[ext_resource type="Shader" uid="uid://dr2cbhwuxig8g" path="res://Scripts/shader/color_gray.tres" id="2_2pjxo"]
 [ext_resource type="Script" uid="uid://dt5m3filvl1l4" path="res://Entities/health_bar.gd" id="2_v0jog"]
-[ext_resource type="Shader" uid="uid://b808wygwmms5n" path="res://Scripts/color_black.tres" id="3_v0jog"]
+[ext_resource type="Shader" uid="uid://b808wygwmms5n" path="res://Scripts/shader/color_black.tres" id="3_v0jog"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kkdho"]
 shader = ExtResource("1_lr8po")

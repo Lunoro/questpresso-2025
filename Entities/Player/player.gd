@@ -1,4 +1,4 @@
-extends "res://Scripts/entities.gd"
+extends "res://Entities/entities.gd"
 
 var is_interacting = false
 var input_direction

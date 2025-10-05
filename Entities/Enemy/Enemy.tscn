@@ -1,8 +1,8 @@
 [gd_scene load_steps=131 format=3 uid="uid://brliyf0hak32e"]
 
-[ext_resource type="Script" uid="uid://bje8o2t0yo5fi" path="res://Scripts/enemy/enemy.gd" id="1_pfjfy"]
+[ext_resource type="Script" uid="uid://bje8o2t0yo5fi" path="res://Entities/Enemy/enemy.gd" id="1_pfjfy"]
 [ext_resource type="Texture2D" uid="uid://1ofxnn85cbyi" path="res://Assets/RPG_Hero/idle/idle_down_40x40.png" id="2_82iww"]
-[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_et43m"]
+[ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/shader/bw_shader.tres" id="2_et43m"]
 [ext_resource type="Texture2D" uid="uid://c2oas2xs6mi84" path="res://Assets/RPG_Hero/attack/attack_down_40x40.png" id="2_oay0y"]
 [ext_resource type="Texture2D" uid="uid://4847o6ejngxv" path="res://Assets/RPG_Hero/idle/idle_left_40x40.png" id="3_a5uau"]
 [ext_resource type="Texture2D" uid="uid://clwqcuaul7bfe" path="res://Assets/RPG_Hero/attack/attack_left_40x40.png" id="3_g6rqj"]
