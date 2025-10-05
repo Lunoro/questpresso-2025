@@ -232,7 +232,7 @@ position = Vector2(191, -166)
 [node name="teleport_to" type="Marker2D" parent="."]
 position = Vector2(2038, -1630)
 
-[node name="player" parent="." instance=ExtResource("3_bgp44")]
+[node name="player" parent="." groups=["player"] instance=ExtResource("3_bgp44")]
 position = Vector2(1722, -2859)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -247,5 +247,6 @@ script = ExtResource("4_tqwdr")
 position = Vector2(1584, -2846)
 shape = SubResource("CircleShape2D_twg8k")
 
+[connection signal="body_entered" from="Portal-Scene-Switch" to="Portal" method="_on_portal_scene_switch_body_entered"]
 [connection signal="body_entered" from="Portal-Scene-Switch" to="Portal-Scene-Switch" method="_on_body_entered"]
 [connection signal="body_exited" from="Portal-Scene-Switch" to="Portal-Scene-Switch" method="_on_body_exited"]
