@@ -159,6 +159,7 @@ shape = SubResource("CircleShape2D_b456k")
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 [node name="player" parent="." instance=ExtResource("3_b456k")]
 position = Vector2(0, 104)
@@ -170,6 +171,8 @@ position_smoothing_enabled = true
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(4, 4)
 
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
