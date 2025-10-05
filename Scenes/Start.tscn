@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bqt8wbibax40h"]
 
-[ext_resource type="Script" uid="uid://by40nr2u0thuu" path="res://Scripts/button.gd" id="1_og4jd"]
+[ext_resource type="Script" uid="uid://by40nr2u0thuu" path="res://Scripts/Button/button.gd" id="1_og4jd"]
 
 [node name="Start" type="Node2D"]
 
@@ -11,6 +11,7 @@ offset_right = 164.0
 offset_bottom = 43.0
 text = "Start Game"
 script = ExtResource("1_og4jd")
+metadata/_edit_use_anchors_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

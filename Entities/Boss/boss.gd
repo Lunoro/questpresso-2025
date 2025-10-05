@@ -1,4 +1,4 @@
-extends "res://Scripts/entities.gd"
+extends "res://Entities/entities.gd"
 
 # TODO: Bossfight -> Boss teleports infront of player
 #			-> Brainstorm some attacks maybe spikes
@@ -7,17 +7,17 @@ extends "res://Scripts/entities.gd"
 #			-> Phase: one and two
 #				-> one: normal attacks and spawns
 #				-> two: shuriken and spawns, sometimes normal attacks
+# Assets: https://cuddle-bug.itch.io/apocalypse/download/eyJpZCI6MjA3Mzg5OSwiZXhwaXJlcyI6MTc1OTY4NDIzNn0%3d.T0UQi3ifLad12QfDhz%2ft6rwqwqE%3d
 
 @onready var player : CharacterBody2D = %player
-@export var enemy_scene: PackedScene = preload("res://Entities/Enemy.tscn")
+@export var enemy_scene: PackedScene = preload("res://Entities/Enemy/Enemy.tscn")
 
 var player_position:Vector2
-
 func _ready() -> void:
 	$Entrance.start()
-	health = 1
-	max_health = 1
-	armor = 1
+	health = 50
+	max_health = 50
+	armor = 5
 	attack_cooldown_node = $attack_cooldown
 	AnimatedSprite = $AnimatedSprite2D
 	collision_shape_diameter = 35
@@ -33,44 +33,15 @@ func _physics_process(delta: float) -> void:
 	position_check()
 	player_position = player.global_position
 	
-	#Debug ist auf L gelegt, probier ruhig mal die attacken
-	if(Input.is_action_just_pressed("Debug")):
-		shuriken_circle_attack()
-		#attack(0, 0, 0)
-		#summon_enemy_attack()
 	if collide: 
 		for i in in_collision_area:
 			no_clipping_collisionShape2D(i, self, true)
-	
-func fight() -> void:
-	print("called fight")
-	if ((health / max_health) < 0.5):
-		attack_random(1, 2)
-		return
-	print("fight")
-	attack_random(0, 2)
-# attack cooldown bestimmt pace und sucht random attacken um auszuführen
-# Änderung des paces pro attack: Summon 30sec to kill the enemies
-# Normal attack 2seconds
-# Shuriken just the animation
-
-func attack_random(x: int, y: int):
-	match randi_range(x, y):
-		0: attack(0, 0, 0)
-		1: summon_enemy_attack()
-		2: shuriken_circle_attack()
-		
-
-func _on_attack_cooldown_timeout() -> void:
-	print("next attack")
-	fight()
 		
 func spawn():
 	$AnimatedSprite2D.play_backwards("teleport")
 	
 func despawn():
 	$AnimatedSprite2D.play("teleport")
-
 	
 func position_check():
 	if (player_position.y < global_position.y):
@@ -83,16 +54,22 @@ func teleport():
 	global_position = new_pos
 	$AnimatedSprite2D.play_backwards("teleport")
 	
-func _on_timer_timeout() -> void:
-	pass
-
-func _on_animated_sprite_2d_animation_finished() -> void:
-	if(is_dead):
-		queue_free()
+func fight() -> void:
+	if ((health / max_health) < 0.5):
+		attack_random(1, 2)
 		return
-	$AnimatedSprite2D.play("idle")
-	$Summon1.play("default")
-	$Summon2.play("default")
+
+	attack_random(0, 1)
+	print("pre timeout")
+	await $Attack_Timer.timeout
+	print("timeout")
+	$Attack_Timer.start()
+
+func attack_random(x: int, y: int):
+	match randi_range(x, y):
+		0: attack(0, 0, 0)
+		1: summon_enemy_attack()
+		2: shuriken_circle_attack()
 	
 # override because of unique moveset
 func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> void:
@@ -115,7 +92,7 @@ func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> v
 			knockback(knockback_amount * knockback_multiplier,position,player)
 				
 	await AnimatedSprite.animation_finished
-	$attack_cooldown.start(2)
+	$Attack_Timer.set_wait_time(2)
 	
 func summon_enemy_attack():
 	$AnimatedSprite2D.play("summon")
@@ -124,8 +101,8 @@ func summon_enemy_attack():
 	spawn_enemy(Vector2(50, 0))
 	spawn_enemy(Vector2(-50, 0))
 	await $AnimatedSprite2D.animation_finished
-	$attack_cooldown.start(60)
-
+	$Attack_Timer.set_wait_time(15)
+	
 func spawn_enemy(position_to_boss: Vector2):
 	if enemy_scene:
 		var enemy = enemy_scene.instantiate()
@@ -143,13 +120,23 @@ func shuriken_circle_attack():
 		var shuriken = preload("res://Entities/Boss/shuriken.tscn").instantiate()
 		
 		shuriken.global_position = global_position + Vector2(cos(angle), sin(angle)) * radius
-		
 		shuriken.direction = Vector2(cos(angle), sin(angle)).normalized()
 		shuriken.speed = 100
 		
 		get_tree().current_scene.add_child(shuriken)
-
-	$attack_cooldown.start()
+	$Attack_Timer.set_wait_time(2)
+	
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if(is_dead):
+		queue_free()
+		return
+	$AnimatedSprite2D.play("idle")
+	$Summon1.play("default")
+	$Summon2.play("default")
+	
+func _on_attack_timer_timeout() -> void:
+	print("attack")
+	fight()
 	
 func _on_entrance_timeout() -> void:
 	spawn()

@@ -5,8 +5,8 @@ extends Node
 @onready var player_node: Node = get_node(player_path)
 
 var placeholder : Object
-var collectibles : PackedScene = load("res://Objects/collectibles.tscn")
-var enemies : PackedScene = load("res://Entities/Enemy.tscn")
+var collectibles : PackedScene = load("res://Objects/Collectibles/collectibles.tscn")
+var enemies : PackedScene = load("res://Entities/Enemy/Enemy.tscn")
 var enemy_instance_id = 0
 var collectible_instance_id = 0
 

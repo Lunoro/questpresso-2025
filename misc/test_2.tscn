@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=4 uid="uid://c4pgtqym4mo1k"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_tam42"]
-[ext_resource type="Script" uid="uid://c2msb5x6fxux" path="res://area_2d2.gd" id="2_m0tip"]
-[ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player.tscn" id="3_b456k"]
+[ext_resource type="Script" uid="uid://c2msb5x6fxux" path="res://misc/area_2d2.gd" id="2_m0tip"]
+[ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player/Player.tscn" id="3_b456k"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_m0tip"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)

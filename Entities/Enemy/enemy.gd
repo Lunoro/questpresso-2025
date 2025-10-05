@@ -1,4 +1,4 @@
-extends "res://Scripts/entities.gd"
+extends "res://Entities/entities.gd"
 
 
 @onready var vision_area = $FOV
