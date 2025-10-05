@@ -1,22 +1,22 @@
 [gd_scene load_steps=6 format=3 uid="uid://djfu6oyhayv44"]
 
 [ext_resource type="Script" uid="uid://3vv5s2hau5pr" path="res://Objects/UI/ui.gd" id="1_70ld6"]
-[ext_resource type="LabelSettings" uid="uid://cfb4s2asirdjd" path="res://Assets/Pixelify_Sans/label_setting_deathscreen.tres" id="2_8cq5k"]
+[ext_resource type="LabelSettings" uid="uid://b0jj0l700x7lq" path="res://Objects/UI/new_label_settings.tres" id="3_4o64k"]
 [ext_resource type="FontFile" uid="uid://bjxnmkuqq437t" path="res://Assets/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf" id="3_iia7y"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_breda"]
+font = ExtResource("3_iia7y")
+font_size = 45
+font_color = Color(0, 0, 0, 1)
+shadow_size = 16
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_4o64k"]
 font = ExtResource("3_iia7y")
 font_size = 145
 font_color = Color(0, 0, 0, 1)
 shadow_size = 32
-shadow_color = Color(1, 1, 1, 1)
-shadow_offset = Vector2(0, 0)
-
-[sub_resource type="LabelSettings" id="LabelSettings_iia7y"]
-font = ExtResource("3_iia7y")
-font_size = 70
-font_color = Color(0, 0, 0, 1)
-shadow_size = 20
 shadow_color = Color(1, 1, 1, 1)
 shadow_offset = Vector2(0, 0)
 
@@ -30,9 +30,10 @@ offset_right = 337.0
 offset_bottom = 162.0
 theme_override_font_sizes/font_size = 32
 text = "Health: "
-label_settings = ExtResource("2_8cq5k")
+label_settings = SubResource("LabelSettings_breda")
 
 [node name="deathscreen" type="Label" parent="."]
+visible = false
 top_level = true
 anchors_preset = 8
 anchor_left = 0.5
@@ -51,6 +52,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="retry" type="Button" parent="."]
+visible = false
 offset_left = 432.0
 offset_top = 413.0
 offset_right = 720.0
@@ -71,10 +73,11 @@ offset_bottom = 42.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "RETRY?"
-label_settings = SubResource("LabelSettings_iia7y")
+label_settings = ExtResource("3_4o64k")
 horizontal_alignment = 1
 
 [node name="win" type="Label" parent="."]
+visible = false
 top_level = true
 anchors_preset = 8
 anchor_left = 0.5
