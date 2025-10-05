@@ -62,7 +62,8 @@ func damage_taken(amount):
 		is_dead = true
 		health = 0
 		update_animation()
-	if health < 0: health = 0;
+	if health < 0: 
+		health = 0;
 
 #TODO smooth machen
 func knockback(amount:float, source:Vector2, knockback_target):
