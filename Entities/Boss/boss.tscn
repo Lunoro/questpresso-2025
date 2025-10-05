@@ -325,10 +325,10 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_np8sd"]
 radius = 18.0
-height = 36.0
+height = 44.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ssfxk"]
-radius = 15.0
+radius = 16.0
 height = 32.0
 
 [node name="Boss" type="CharacterBody2D"]
@@ -371,7 +371,7 @@ one_shot = true
 [node name="boss_marker" type="Area2D" parent="."]
 
 [node name="marker" type="CollisionShape2D" parent="boss_marker"]
-position = Vector2(0, -4)
+position = Vector2(0, -1)
 shape = SubResource("CapsuleShape2D_np8sd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

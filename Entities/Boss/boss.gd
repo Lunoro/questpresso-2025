@@ -48,7 +48,7 @@ func fight() -> void:
 		attack_random(1, 2)
 		return
 	print("fight")
-	attack(20, 0, 0)
+	attack_random(0, 2)
 # attack cooldown bestimmt pace und sucht random attacken um auszuführen
 # Änderung des paces pro attack: Summon 30sec to kill the enemies
 # Normal attack 2seconds
@@ -57,12 +57,13 @@ func fight() -> void:
 func attack_random(x: int, y: int):
 	match randi_range(x, y):
 		0: attack(0, 0, 0)
-		#1: summon_enemy_attack()
-		#2: shuriken_circle_attack()
+		1: summon_enemy_attack()
+		2: shuriken_circle_attack()
 		
 
 func _on_attack_cooldown_timeout() -> void:
-	pass
+	print("next attack")
+	fight()
 		
 func spawn():
 	$AnimatedSprite2D.play_backwards("teleport")
@@ -106,16 +107,14 @@ func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> v
 	var animation_name = "attack_" + direction_of_anim[random]
 	$AnimatedSprite2D.play(animation_name)
 	
-	for frame in range(3):
+	for frame in range(4):
 		await $AnimatedSprite2D.frame_changed
-	print("Started attack")
 	for i in $Attack_Range.get_overlapping_areas():
-		if(i.get_parent().name == player.name && i.is_in_group("hitbox")):
-			print(i.get_parent().name)
+		if(i.get_parent().name == player.name && i.is_in_group("hitbox") && !is_dead):
 			player.damage_taken(damage) #dem objekt, dass sich in melee hitbox aufhält, Schaden machen
 			knockback(knockback_amount * knockback_multiplier,position,player)
-		await AnimatedSprite.animation_finished				
-	
+				
+	await AnimatedSprite.animation_finished
 	$attack_cooldown.start(2)
 	
 func summon_enemy_attack():
