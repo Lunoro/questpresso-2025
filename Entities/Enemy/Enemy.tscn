@@ -958,7 +958,7 @@ script = ExtResource("1_pfjfy")
 material = SubResource("ShaderMaterial_8hw48")
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_pfjfy")
-animation = &"die_down"
+animation = &"move_down"
 
 [node name="FOV" type="Area2D" parent="."]
 visible = false

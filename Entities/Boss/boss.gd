@@ -9,12 +9,13 @@ extends "res://Entities/entities.gd"
 #				-> two: shuriken and spawns, sometimes normal attacks
 # Assets: https://cuddle-bug.itch.io/apocalypse/download/eyJpZCI6MjA3Mzg5OSwiZXhwaXJlcyI6MTc1OTY4NDIzNn0%3d.T0UQi3ifLad12QfDhz%2ft6rwqwqE%3d
 
-@onready var player : CharacterBody2D = %player
 @export var enemy_scene: PackedScene = preload("res://Entities/Enemy/Enemy.tscn")
+var player: CharacterBody2D
 
 var player_position:Vector2
 func _ready() -> void:
 	$Entrance.start()
+	player = get_tree().get_first_node_in_group("player")
 	health = 50
 	max_health = 50
 	armor = 5

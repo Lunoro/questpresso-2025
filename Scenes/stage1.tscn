@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=4 uid="uid://mvxivvppnegv"]
+[gd_scene load_steps=23 format=4 uid="uid://mvxivvppnegv"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_nwqcy"]
 [ext_resource type="PackedScene" uid="uid://drv1ttaresoif" path="res://Objects/Portal/portal.tscn" id="2_0x0mv"]
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player/Player.tscn" id="3_bgp44"]
+[ext_resource type="Script" uid="uid://c2msb5x6fxux" path="res://misc/area_2d2.gd" id="4_tqwdr"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nwqcy"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -212,6 +213,9 @@ physics_layer_0/collision_mask = 56
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_nwqcy")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_twg8k"]
+radius = 22.022715
+
 [node name="Node2D" type="Node2D"]
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -235,3 +239,12 @@ position = Vector2(1513, -318)
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("4_tqwdr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_twg8k")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]

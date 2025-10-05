@@ -1,6 +1,5 @@
 extends "res://Entities/entities.gd"
 
-
 @onready var vision_area = $FOV
 @onready var navigation_agent = $NavigationAgent2D
 
