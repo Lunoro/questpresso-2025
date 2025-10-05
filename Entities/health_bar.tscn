@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3 uid="uid://8gmwg0wpj41r"]
+
+[ext_resource type="Shader" uid="uid://jf1ecvffl1ev" path="res://Scripts/shader/color_white.tres" id="1_lr8po"]
+[ext_resource type="Shader" uid="uid://dr2cbhwuxig8g" path="res://Scripts/shader/color_gray.tres" id="2_2pjxo"]
+[ext_resource type="Script" uid="uid://dt5m3filvl1l4" path="res://Entities/health_bar.gd" id="2_v0jog"]
+[ext_resource type="Shader" uid="uid://b808wygwmms5n" path="res://Scripts/shader/color_black.tres" id="3_v0jog"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkdho"]
+shader = ExtResource("1_lr8po")
+
+[sub_resource type="QuadMesh" id="QuadMesh_8hw48"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g6s0g"]
+shader = ExtResource("2_2pjxo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_le5q7"]
+shader = ExtResource("3_v0jog")
+
+[node name="health_bar" type="MeshInstance2D"]
+
+[node name="health_bar1" type="MeshInstance2D" parent="."]
+z_index = 100
+material = SubResource("ShaderMaterial_kkdho")
+scale = Vector2(34.5, 2.5)
+mesh = SubResource("QuadMesh_8hw48")
+script = ExtResource("2_v0jog")
+
+[node name="health_bar3" type="MeshInstance2D" parent="."]
+z_index = 99
+material = SubResource("ShaderMaterial_g6s0g")
+scale = Vector2(34.5, 2.5)
+mesh = SubResource("QuadMesh_8hw48")
+
+[node name="health_bar2" type="MeshInstance2D" parent="."]
+z_index = 98
+material = SubResource("ShaderMaterial_le5q7")
+position = Vector2(-8.3539635e-07, 0)
+scale = Vector2(38, 6.0000005)
+mesh = SubResource("QuadMesh_8hw48")
