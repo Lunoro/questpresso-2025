@@ -337,7 +337,7 @@ script = ExtResource("1_y4shp")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_01fwt")
 sprite_frames = SubResource("SpriteFrames_70fya")
-animation = &"none"
+animation = &"attack_left"
 autoplay = "none"
 
 [node name="Timer" type="Timer" parent="."]

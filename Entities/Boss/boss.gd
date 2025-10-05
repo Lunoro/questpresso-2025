@@ -16,6 +16,7 @@ var player_position:Vector2
 func _ready() -> void:
 	$Entrance.start()
 	health = 1
+	max_health = 1
 	armor = 1
 	attack_cooldown_node = $attack_cooldown
 	AnimatedSprite = $AnimatedSprite2D
@@ -41,23 +42,23 @@ func _physics_process(delta: float) -> void:
 		for i in in_collision_area:
 			no_clipping_collisionShape2D(i, self, true)
 	
-func fight():
+func fight() -> void:
+	print("called fight")
 	if ((health / max_health) < 0.5):
 		attack_random(1, 2)
 		return
-	attack_random(0, 1)
-		
+	print("fight")
+	attack(0, 0, 0)
 # attack cooldown bestimmt pace und sucht random attacken um auszuführen
 # Änderung des paces pro attack: Summon 30sec to kill the enemies
 # Normal attack 2seconds
 # Shuriken just the animation
 
 func attack_random(x: int, y: int):
-	
 	match randi_range(x, y):
-		0: attack(0, 0, 0)
-		1: summon_enemy_attack()
-		2: shuriken_circle_attack()
+		0: attack(100, 0, 0)
+		#1: summon_enemy_attack()
+		#2: shuriken_circle_attack()
 		
 
 func _on_attack_cooldown_timeout() -> void:
@@ -82,7 +83,7 @@ func teleport():
 	$AnimatedSprite2D.play_backwards("teleport")
 	
 func _on_timer_timeout() -> void:
-	teleport()
+	pass
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if(is_dead):
@@ -94,6 +95,8 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	
 # override because of unique moveset
 func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> void:
+	await teleport();
+	
 	var random = randi_range(0, 1)
 	var direction_of_anim: Dictionary[int, String] = {
 		0: "left",
@@ -102,6 +105,23 @@ func attack(damage: float, knockback_amount: float, attack_cooldown: float) -> v
 	
 	var animation_name = "attack_" + direction_of_anim[random]
 	$AnimatedSprite2D.play(animation_name)
+	
+	for frame in range(3):
+		await $AnimatedSprite2D.frame_changed
+		print("Started attack")
+		# get all objects on Area
+		for i in $Attack_Range.get_overlapping_areas():
+			player = i.get_parent()
+			print(player.name)
+			
+			if (player.name != "player"): return
+			
+			print("Entered loop")
+			if typeof(player) == 24 && player != self: # wenn in_melee vom Typ object ist --> falls in_melee das objekt player ist, ist es insgesamt das selbe wie %player
+				player.damage_taken(damage) #dem objekt, dass sich in melee hitbox aufhält, Schaden machen
+				knockback(knockback_amount * knockback_multiplier,position,player)
+		await AnimatedSprite.animation_finished
+	
 	$attack_cooldown.start(2)
 	
 func summon_enemy_attack():
