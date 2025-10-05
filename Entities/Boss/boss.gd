@@ -7,6 +7,7 @@ extends "res://Entities/entities.gd"
 #			-> Phase: one and two
 #				-> one: normal attacks and spawns
 #				-> two: shuriken and spawns, sometimes normal attacks
+# Assets: https://cuddle-bug.itch.io/apocalypse/download/eyJpZCI6MjA3Mzg5OSwiZXhwaXJlcyI6MTc1OTY4NDIzNn0%3d.T0UQi3ifLad12QfDhz%2ft6rwqwqE%3d
 
 @onready var player : CharacterBody2D = %player
 @export var enemy_scene: PackedScene = preload("res://Entities/Enemy/Enemy.tscn")
