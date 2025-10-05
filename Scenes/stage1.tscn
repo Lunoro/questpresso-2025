@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=4 uid="uid://mvxivvppnegv"]
+[gd_scene load_steps=21 format=4 uid="uid://mvxivvppnegv"]
 
 [ext_resource type="Texture2D" uid="uid://cu7cidxoeagfv" path="res://Assets/DoomlandKit/DoomlandKit/Tiles-16x16.png" id="1_nwqcy"]
 [ext_resource type="PackedScene" uid="uid://drv1ttaresoif" path="res://Objects/Portal/portal.tscn" id="2_0x0mv"]
+[ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player/Player.tscn" id="3_bgp44"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_nwqcy"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -203,9 +204,11 @@ texture = ExtResource("1_nwqcy")
 6:3/0 = 0
 6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:3/0 = 0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSet" id="TileSet_7uypk"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 56
+physics_layer_0/collision_mask = 56
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_nwqcy")
 
@@ -220,7 +223,15 @@ tile_map_data = PackedByteArray("AADZ////AAAGAAAAAADZ/wAAAAAGAAAAAADa/wEAAAAGAAA
 tile_set = SubResource("TileSet_7uypk")
 
 [node name="Portal" parent="." instance=ExtResource("2_0x0mv")]
-position = Vector2(1573, -304)
+position = Vector2(191, -166)
 
 [node name="teleport_to" type="Marker2D" parent="."]
 position = Vector2(2038, -1630)
+
+[node name="Player" parent="." instance=ExtResource("3_bgp44")]
+position = Vector2(1513, -318)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
