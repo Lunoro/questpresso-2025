@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://ci2q6fuq8rkrk"]
+[gd_scene load_steps=14 format=4 uid="uid://ci2q6fuq8rkrk"]
 
 [ext_resource type="PackedScene" uid="uid://d0b424myd7i3u" path="res://Entities/Player.tscn" id="1_y34fs"]
 [ext_resource type="Shader" uid="uid://ca5cscdeu88wa" path="res://Scripts/bw_shader.tres" id="2_ivdeq"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://c8q66clyp2per" path="res://Entities/Boss/boss.tscn" id="6_c2ibx"]
 [ext_resource type="PackedScene" uid="uid://djfu6oyhayv44" path="res://Objects/UI/ui.tscn" id="6_ypsnf"]
 [ext_resource type="AudioStream" uid="uid://bk5ilh4j2spnb" path="res://Music/questpresso_boss.mp3" id="7_c2ibx"]
-[ext_resource type="Script" uid="uid://cg0r4am3nnpxj" path="res://Scenes/game_manager.gd" id="8_ivdeq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ivdeq"]
 shader = ExtResource("2_ivdeq")
@@ -68,8 +67,6 @@ shader = ExtResource("2_ivdeq")
 
 [node name="game" type="Node2D"]
 material = SubResource("ShaderMaterial_ivdeq")
-script = ExtResource("8_ivdeq")
-player_path = NodePath("player")
 
 [node name="player" parent="." groups=["player"] instance=ExtResource("1_y34fs")]
 unique_name_in_owner = true
