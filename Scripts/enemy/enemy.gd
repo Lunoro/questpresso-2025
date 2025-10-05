@@ -39,21 +39,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if(is_dead): 
-		#drops!
-		var t = ["heal_full"].pick_random()
-		var dict = {
-			"heal_small" :			["heal", [5]],
-			"heal_full" : 			["heal", [-1]],
-			"speed" : 				["speed", [2,20]], #speedmulti, duration
-			"haste": 				["haste", [0.01,10]], #changes attack_cooldown [how fast (NIE 0), duration] -> for 0 < fastness < 1 faster; above 1 slower
-			"armor": 				["armor", [3,10]], 
-			"knockback": 			["knockback", [10,10]],
-			"knockback_resistance": ["knockback_resistance", [0.2,10]],
-			"regeneration": 		["regeneration", [1,10]]
-		}
-		print(str(dict[t][0]) + "      " + str(dict[t][1]) )
-		lib.spawn_collectible(position, dict[t][0], dict[t][1])
-		queue_free()
+		if die == false: 
+			die = true
+			$death_timer.start(5) #on timeout aktiviere drops
+			print("die")
 		return
 	regenerate(regeneration)
 	update_animation()
@@ -128,7 +117,7 @@ func _on_area_2d_body_entered(area: Node2D) -> void:
 
 func _on_area_2d_body_exited(area: Node2D) -> void:
 	#print("left")
-	if area.name.contains("marker") && area.get_parent().name == "player":
+	if area.name.contains("marker") && area.get_parent().name == "player" && not is_dead:
 		in_sight = false
 		$Update_Aggro.start(-1)
 	#print("out fov: " + area.name)
@@ -153,3 +142,29 @@ func _on_enemy_marker_area_exited(area: Area2D) -> void:
 		in_collision_area.erase(area.get_parent())
 	if in_collision_area.is_empty(): 
 		collide = false
+
+func _on_death_timer_timeout() -> void:
+	#drops!
+	var t = [
+		"heal_small", 
+		"heal_full", 
+		"speed", 
+		"haste", 
+		"armor",
+		"knockback", 
+		"knockback_resistance",
+		"regeneration"
+	].pick_random()
+	
+	var dict = {
+		"heal_small" :			["heal", [5]],
+		"heal_full" : 			["heal", [-1]],
+		"speed" : 				["speed", [1.5,20]], #speedmulti, duration
+		"haste": 				["haste", [0.1,10]], #changes attack_cooldown [how fast (NIE 0), duration] -> for 0 < fastness < 1 faster; above 1 slower
+		"armor": 				["armor", [3,10]], 
+		"knockback": 			["knockback", [5,10]], #knockback_multiplier = 5; duration 10 s
+		"knockback_resistance": ["knockback_resistance", [0.2,10]], #kncokback_resistance -> zwischen 0 und 1 wirds besser
+		"regeneration": 		["regeneration", [1,10]]
+	}
+	lib.spawn_collectible(position, dict[t][0], dict[t][1], $"../player" ) #lib = library -> game_manager.gd, um Funktionen von dort aufzurufen
+	queue_free()

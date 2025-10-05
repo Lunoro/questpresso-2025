@@ -2,12 +2,15 @@ extends "res://Scripts/entities.gd"
 
 var is_interacting = false
 var input_direction
+var dodge_allowed = true
+var dodge = 1
+var dodge_cooldown = 5
 
 func _ready() -> void:
 	speed_base = 125
 	max_health = 20
 	health = 20
-	armor = 1
+	armor = 3
 	attack_cooldown_node = $attack_cooldown #setzt Timer node, bei enemy und player grad gleich benannt, bei Problemen umbenennen
 	attack_cooldown_base = 1
 	knockback_base = 100
@@ -29,7 +32,7 @@ func get_input():
 		return
 	input_direction = Input.get_vector("left", "right", "up", "down")
 	listen_for_attack()
-	velocity = input_direction * speed_multiplier * speed_base
+	velocity = input_direction * speed_multiplier * speed_base * dodge
 	is_moving = velocity.x != 0 || velocity.y != 0
 	
 func _physics_process(delta):
@@ -39,6 +42,7 @@ func _physics_process(delta):
 		regenerate(regeneration)
 		get_input()
 		move_extra()
+		listen_for_dodge()
 		move_and_slide()
 		change_direction(input_direction.x, input_direction.y)
 		update_area_rotation()
@@ -58,9 +62,20 @@ func change_direction(x : int, y : int):
 # fight block
 
 func listen_for_attack():
-	if Input.is_action_just_released("click") && attack_allowed == true:
+	if ( Input.is_action_just_released("click") || Input.is_key_pressed(KEY_J) ) && attack_allowed == true:
 		attack(5.0, knockback_base * knockback_multiplier, attack_cooldown_base * attack_cooldown_multiplier)
-		
+
+func listen_for_dodge(): 
+	if Input.is_action_just_pressed("ui_accept") && dodge_allowed == true:
+		dodge_allowed = false
+		$dodge_cooldown.start(dodge_cooldown)
+		print("dodge!")
+		dodge = 2.5
+	if dodge > 1: 
+		dodge -= 2.5 * get_process_delta_time()
+		if dodge < 1.05: 
+			dodge = 1
+
 func update_area_rotation():
 	$AnimatedSprite2D/SwordHit.global_rotation_degrees = (direction_to_rotation());
 	$Interacting.global_rotation_degrees = (direction_to_rotation());
@@ -100,3 +115,7 @@ func _on_interacting_area_entered(area: Area2D) -> void:
 		print("interacting")
 		area.get_parent().interact()
 	$Interacting/CollisionShape2D.disabled = true
+
+
+func _on_dodge_cooldown_timeout() -> void:
+	dodge_allowed = true

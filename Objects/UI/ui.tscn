@@ -1,12 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://djfu6oyhayv44"]
+[gd_scene load_steps=4 format=3 uid="uid://djfu6oyhayv44"]
 
-[ext_resource type="Script" uid="uid://3vv5s2hau5pr" path="res://Objects/ui.gd" id="1_70ld6"]
+[ext_resource type="Script" uid="uid://3vv5s2hau5pr" path="res://Objects/UI/ui.gd" id="1_70ld6"]
+[ext_resource type="FontFile" uid="uid://bjxnmkuqq437t" path="res://Assets/Pixelify_Sans/PixelifySans-VariableFont_wght.ttf" id="2_8cq5k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8cq5k"]
+font = ExtResource("2_8cq5k")
+font_size = 35
+font_color = Color(0, 0, 0, 1)
+shadow_size = 12
+shadow_color = Color(1, 1, 1, 1)
+shadow_offset = Vector2(0, 0)
 
 [node name="ui" type="CanvasLayer"]
 script = ExtResource("1_70ld6")
 
 [node name="Label" type="Label" parent="."]
-offset_right = 317.0
-offset_bottom = 142.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 337.0
+offset_bottom = 162.0
 theme_override_font_sizes/font_size = 32
 text = "Health: "
+label_settings = SubResource("LabelSettings_8cq5k")

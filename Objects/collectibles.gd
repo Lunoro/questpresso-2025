@@ -7,22 +7,22 @@ var type : String
 var parameter
 var posy
 var offset
+var collected = false
 
 func _ready() -> void:
 	scale *= 2
-	var x = Time.get_ticks_usec()
-	while x < Time.get_ticks_usec() - 1:
-		pass
 
 #TODO custom textures and/or animations for different potion types
 func _process(delta: float) -> void:
+	#print("Test")
 	distance_to_player = (player.position - position).length()
-	if distance_to_player < 20: 
+	if distance_to_player < 20 && collected == false: 
+		collected = true
 		if type == "heal": 
-			if parameter == -1 || player.health + parameter >= player.max_health: 
+			if parameter[0] == -1 || player.health + parameter[0] >= player.max_health: 
 				player.health = player.max_health
 			else: 
-				player.health += parameter
+				player.health += parameter[0]
 			queue_free()
 			
 		if type == "speed": 
@@ -54,14 +54,13 @@ func _process(delta: float) -> void:
 			player.regeneration = parameter[0]
 			$Timer_Regeneration.start(parameter[1])
 			$AnimatedSprite2D.hide()
-		
 			
 	if type == "heal": 
 		#$AnimatedSprite2D.play("heal")
-		if parameter == -1: 
-			$AnimatedSprite2D.animation = "heal_small"
-		else: 
+		if parameter[0] == -1: 
 			$AnimatedSprite2D.animation = "heal_full"
+		else: 
+			$AnimatedSprite2D.animation = "heal_small"
 	if type == "speed": 
 		$AnimatedSprite2D.animation = "speed"
 		#$AnimatedSprite2D.play("speed")

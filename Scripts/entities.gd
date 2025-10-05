@@ -20,6 +20,7 @@ var health = 10
 var max_health = 10
 var regeneration = 0
 var is_dead = false
+var die = false
 var armor = 0
 var armor_bonus = 0
 var attack_cooldown_base = 1
@@ -141,6 +142,8 @@ func regenerate(regeneration):
 
 #TODO: überarbeiten, velocity vielleicht mit einbeziehen
 func no_clipping_collisionShape2D(object1 : CharacterBody2D, object2 : CharacterBody2D, object2_is_static: bool): #nur Kreise, hat collision shape der entities ersetzt; object2_is_static: wenn war, wird nur object1 zurückgepusht
+	if object1.is_dead == true || object1.is_dead == true: 
+		return #über Leichen gehen
 	var pos1 : Vector2 = object1.position
 	var pos2 : Vector2 = object2.position
 	var min_distance : float = 0.5*(object1.collision_shape_diameter + object2.collision_shape_diameter)  #0.1 als kleine Lücke

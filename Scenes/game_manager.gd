@@ -2,11 +2,13 @@
 extends Node
 
 @export var player_path : NodePath
+@onready var player_node: Node = get_node(player_path)
 
 var placeholder : Object
-var collectibles : PackedScene = load("res://Objects/collectables.tscn")
+var collectibles : PackedScene = load("res://Objects/collectibles.tscn")
 var enemies : PackedScene = load("res://Entities/Enemy.tscn")
 var enemy_instance_id = 0
+var collectible_instance_id = 0
 
 var collectibles_instances = [
 #	[Pointer Klon, Position beim Erstellen, Typ, Parameter]
@@ -26,18 +28,17 @@ var collectibles_instances = [
 	#Vector2(100, -100)
 	#]
 
-@onready var player_node: Node = get_node(player_path)
 
 func _ready() -> void:
-	for clone in collectibles_instances: #instantiate collectibles
-		var dup = collectibles.instantiate()
-		add_child(dup)
-		clone[0] = get_node(dup.get_path())
-		clone[0].position = clone[1]
-		clone[0].posy = clone[1][1]
-		clone[0].type = clone[2]
-		clone[0].parameter = clone[3]
-		clone[0].offset = randf()
+	#for clone in collectibles_instances: #instantiate collectibles
+		#var dup = collectibles.instantiate()
+		#add_child(dup)
+		#clone[0] = get_node(dup.get_path())
+		#clone[0].position = clone[1]
+		#clone[0].posy = clone[1][1]
+		#clone[0].type = clone[2]
+		#clone[0].parameter = clone[3]
+		#clone[0].offset = randf()
 		
 	#for e in range(enemy_location.size()): 
 		#var parent_of_player = player_node.get_parent()
@@ -50,7 +51,6 @@ func _ready() -> void:
 		##print( str(enemy.get_path()) + "     " + str(enemy.get_parent()) + "     " + enemy.name + "     " + str(%player.get_parent()) + "     " + str(get_node(%player.get_path()) ))
 		##enemy = get_node(enemy.get_path())
 		##enemy.position = enemy_location[e]
-	
 	spawn_enemy(Vector2(-100,-50),Direction.DOWN,"standard",[["health", 2], ["max_health", 2]])
 	spawn_enemy(Vector2(100,50),Direction.LEFT,"standard",[])
 
@@ -71,17 +71,23 @@ func spawn_enemy(pos : Vector2, direction : Direction, type : String, spawn_para
 	enemy.type = type
 	enemy.spawn_parameters = spawn_parameters
 
-func spawn_collectible(pos : Vector2, type : String, spawn_parameters : Array) : #nur eine Methode verwenden, onready raushauen
-	var dup = collectibles.instantiate()
-	#nicht direkt einsammelbar!
-	$".".add_child(dup)
-	#adup = get_node(dup.get_path())
-	dup.position = pos
-	print("collectible spawned    " + str(dup.position) )
-	dup.posy = pos.y
-	dup.type = type
-	dup.parameter = spawn_parameters
-	dup.offset = randf()
+func spawn_collectible(pos : Vector2, type : String, spawn_parameters : Array, anchor_node : Node2D) : #nur eine Methode verwenden, onready raushauen
+	#anchor_node soll player_node sein
+	# Fallback: falls player_path falsch ist, suche dynamisch nach Node mit Namen "Player"
+	#if player_node == null:
+		#player_node = get_tree().get_current_scene().find_node("Player", true, false)
+	#if player_node == null:
+		#push_warning("player_node nicht gefunden! player_path korrekt setzen oder Player in Scene vorhanden?")
+	var col = collectibles.instantiate()
+	if anchor_node.get_parent() == null: print("Alarm") #DEBUG
+	anchor_node.add_sibling(col)
+	#col = get_node(col.get_path())
+	col.position = pos
+	print("collectible spawned    " + str(col.position) + "   Type:" + str(type))
+	col.posy = pos.y
+	col.type = type
+	col.parameter = spawn_parameters
+	col.offset = randf()
 
 # z indexing
 func z_indexing() -> void: 
