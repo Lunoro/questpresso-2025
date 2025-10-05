@@ -74,4 +74,22 @@ text = "RETRY?"
 label_settings = SubResource("LabelSettings_iia7y")
 horizontal_alignment = 1
 
+[node name="win" type="Label" parent="."]
+top_level = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -20.0
+offset_right = 70.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "YOU WON!"
+label_settings = SubResource("LabelSettings_4o64k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="button_down" from="retry" to="." method="_on_retry_button_down"]

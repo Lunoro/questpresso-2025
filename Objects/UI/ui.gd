@@ -7,6 +7,7 @@ var text : String
 func _ready() -> void:
 	$deathscreen.hide()
 	$retry.hide()
+	$win.hide()
 
 
 func _process(delta: float) -> void:
@@ -15,6 +16,10 @@ func _process(delta: float) -> void:
 		$deathscreen.show()
 		$retry.show()
 		print("'s dead")
+		return
+	if $"../Boss".is_dead: 
+		$Label.hide()
+		$win.show()
 		return
 	text += "Health: " + str(round(player.health))
 	if player.regeneration > 0: text += "\nregeneration : " + str(player.regeneration)
