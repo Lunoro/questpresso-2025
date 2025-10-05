@@ -371,6 +371,7 @@ animation = &"knockback_resistance"
 [node name="Timer_Regeneration" type="Timer" parent="."]
 
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="ready" from="." to="." method="_on_ready"]
 [connection signal="timeout" from="Timer_Speed" to="." method="_on_timer_speed_timeout"]
 [connection signal="timeout" from="Timer_Haste" to="." method="_on_timer_haste_timeout"]
 [connection signal="timeout" from="Timer_Armor" to="." method="_on_timer_armor_timeout"]
