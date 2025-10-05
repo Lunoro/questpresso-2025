@@ -68,7 +68,7 @@ func fight() -> void:
 
 func attack_random(x: int, y: int):
 	match randi_range(x, y):
-		0: attack(0, 0, 0)
+		0: attack(10, 5, 0)
 		1: summon_enemy_attack()
 		2: shuriken_circle_attack()
 	
