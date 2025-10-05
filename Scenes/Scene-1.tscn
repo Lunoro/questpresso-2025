@@ -389,6 +389,7 @@ position_smoothing_enabled = true
 rotation_smoothing_enabled = true
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -1
 material = SubResource("ShaderMaterial_ypsnf")
@@ -396,6 +397,8 @@ tile_map_data = PackedByteArray("AAD7/wAAAQAHAAAAAAD7/wEAAQAAAAAAAAD7/wIAAQAAAAA
 tile_set = SubResource("TileSet_30g14")
 collision_visibility_mode = 1
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
